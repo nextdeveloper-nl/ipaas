@@ -4,6 +4,8 @@ namespace NextDeveloper\IPAAS;
 
 use NextDeveloper\Commons\AbstractServiceProvider;
 use NextDeveloper\IPAAS\Console\Commands\SyncN8NCommand;
+use NextDeveloper\IPAAS\Console\Commands\SyncN8NExecutionsCommand;
+use NextDeveloper\IPAAS\Console\Commands\SyncN8NWorkflowsCommand;
 
 /**
  * Class IPaasServiceProvider
@@ -112,6 +114,8 @@ class IPaasServiceProvider extends AbstractServiceProvider
             $this->commands(
                 [
                     SyncN8NCommand::class,
+                    SyncN8NExecutionsCommand::class,
+                    SyncN8NWorkflowsCommand::class,
                 ]
             );
         }
