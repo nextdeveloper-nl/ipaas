@@ -1,0 +1,18 @@
+<?php
+
+namespace NextDeveloper\IPAAS\Services;
+
+use NextDeveloper\IPAAS\Services\AbstractServices\AbstractWorkflowExecutionsService;
+
+/**
+ * This class is responsible from managing the data for WorkflowExecutions
+ *
+ * Class WorkflowExecutionsService.
+ *
+ * @package NextDeveloper\IPAAS\Database\Models
+ */
+class WorkflowExecutionsService extends AbstractWorkflowExecutionsService
+{
+
+    // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+}

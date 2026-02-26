@@ -18,6 +18,17 @@ class AccountsQueryFilter extends AbstractQueryFilter
      */
     protected $builder;
 
+    public function isServiceEnabled($value)
+    {
+        return $this->builder->where('is_service_enabled', $value);
+    }
+
+        //  This is an alias function of isServiceEnabled
+    public function is_service_enabled($value)
+    {
+        return $this->isServiceEnabled($value);
+    }
+     
     public function createdAtStart($date)
     {
         return $this->builder->where('created_at', '>=', $date);
@@ -95,4 +106,5 @@ class AccountsQueryFilter extends AbstractQueryFilter
 
     
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
 }

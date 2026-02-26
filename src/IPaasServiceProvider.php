@@ -3,6 +3,7 @@
 namespace NextDeveloper\IPAAS;
 
 use NextDeveloper\Commons\AbstractServiceProvider;
+use NextDeveloper\IPAAS\Console\Commands\SyncN8NCommand;
 
 /**
  * Class IPaasServiceProvider
@@ -110,7 +111,7 @@ class IPaasServiceProvider extends AbstractServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands(
                 [
-
+                    SyncN8NCommand::class,
                 ]
             );
         }

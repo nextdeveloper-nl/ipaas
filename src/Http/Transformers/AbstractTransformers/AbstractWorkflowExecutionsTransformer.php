@@ -20,16 +20,16 @@ use NextDeveloper\Commons\Http\Transformers\MetaTransformer;
 use NextDeveloper\Commons\Http\Transformers\VotesTransformer;
 use NextDeveloper\Commons\Http\Transformers\AddressesTransformer;
 use NextDeveloper\Commons\Http\Transformers\PhoneNumbersTransformer;
-use NextDeveloper\IPAAS\Database\Models\Accounts;
+use NextDeveloper\IPAAS\Database\Models\WorkflowExecutions;
 use NextDeveloper\Commons\Http\Transformers\AbstractTransformer;
 use NextDeveloper\IAM\Database\Scopes\AuthorizationScope;
 
 /**
- * Class AccountsTransformer. This class is being used to manipulate the data we are serving to the customer
+ * Class WorkflowExecutionsTransformer. This class is being used to manipulate the data we are serving to the customer
  *
  * @package NextDeveloper\IPAAS\Http\Transformers
  */
-class AbstractAccountsTransformer extends AbstractTransformer
+class AbstractWorkflowExecutionsTransformer extends AbstractTransformer
 {
 
     /**
@@ -48,28 +48,42 @@ class AbstractAccountsTransformer extends AbstractTransformer
     ];
 
     /**
-     * @param Accounts $model
+     * @param WorkflowExecutions $model
      *
      * @return array
      */
-    public function transform(Accounts $model)
+    public function transform(WorkflowExecutions $model)
     {
-                                                $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
+                                                $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
+                                                            $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
+                                                            $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
+                                                            $externalExecutionId = \NextDeveloper\\Database\Models\ExternalExecutions::where('id', $model->external_execution_id)->first();
+                                                            $retryOfExecutionId = \NextDeveloper\\Database\Models\RetryOfExecutions::where('id', $model->retry_of_execution_id)->first();
                         
         return $this->buildPayload(
             [
             'id'  =>  $model->uuid,
-            'limits'  =>  $model->limits,
+            'ipaas_workflow_id'  =>  $ipaasWorkflowId ? $ipaasWorkflowId->uuid : null,
+            'ipaas_provider_id'  =>  $ipaasProviderId ? $ipaasProviderId->uuid : null,
             'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
+            'external_execution_id'  =>  $externalExecutionId ? $externalExecutionId->uuid : null,
+            'status'  =>  $model->status,
+            'trigger_mode'  =>  $model->trigger_mode,
+            'started_at'  =>  $model->started_at,
+            'finished_at'  =>  $model->finished_at,
+            'duration_ms'  =>  $model->duration_ms,
+            'error_message'  =>  $model->error_message,
+            'error_node'  =>  $model->error_node,
+            'error_stack'  =>  $model->error_stack,
+            'retry_of_execution_id'  =>  $retryOfExecutionId ? $retryOfExecutionId->uuid : null,
             'created_at'  =>  $model->created_at,
             'updated_at'  =>  $model->updated_at,
             'deleted_at'  =>  $model->deleted_at,
-            'is_service_enabled'  =>  $model->is_service_enabled,
             ]
         );
     }
 
-    public function includeStates(Accounts $model)
+    public function includeStates(WorkflowExecutions $model)
     {
         $states = States::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -78,7 +92,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($states, new StatesTransformer());
     }
 
-    public function includeActions(Accounts $model)
+    public function includeActions(WorkflowExecutions $model)
     {
         $input = get_class($model);
         $input = str_replace('\\Database\\Models', '', $input);
@@ -90,7 +104,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($actions, new AvailableActionsTransformer());
     }
 
-    public function includeMedia(Accounts $model)
+    public function includeMedia(WorkflowExecutions $model)
     {
         $media = Media::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -99,7 +113,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($media, new MediaTransformer());
     }
 
-    public function includeSocialMedia(Accounts $model)
+    public function includeSocialMedia(WorkflowExecutions $model)
     {
         $socialMedia = SocialMedia::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -108,7 +122,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($socialMedia, new SocialMediaTransformer());
     }
 
-    public function includeComments(Accounts $model)
+    public function includeComments(WorkflowExecutions $model)
     {
         $comments = Comments::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -117,7 +131,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($comments, new CommentsTransformer());
     }
 
-    public function includeVotes(Accounts $model)
+    public function includeVotes(WorkflowExecutions $model)
     {
         $votes = Votes::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -126,7 +140,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($votes, new VotesTransformer());
     }
 
-    public function includeMeta(Accounts $model)
+    public function includeMeta(WorkflowExecutions $model)
     {
         $meta = Meta::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -135,7 +149,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($meta, new MetaTransformer());
     }
 
-    public function includePhoneNumbers(Accounts $model)
+    public function includePhoneNumbers(WorkflowExecutions $model)
     {
         $phoneNumbers = PhoneNumbers::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -144,7 +158,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($phoneNumbers, new PhoneNumbersTransformer());
     }
 
-    public function includeAddresses(Accounts $model)
+    public function includeAddresses(WorkflowExecutions $model)
     {
         $addresses = Addresses::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -153,5 +167,4 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
 }

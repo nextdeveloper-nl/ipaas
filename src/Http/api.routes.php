@@ -64,6 +64,69 @@ Route::prefix('ipaas')->group(function () {
         }
     );
 
+    Route::prefix('workflow-executions')->group(
+        function () {
+            Route::get('/', 'WorkflowExecutions\WorkflowExecutionsController@index');
+            Route::get('/actions', 'WorkflowExecutions\WorkflowExecutionsController@getActions');
+
+            Route::get('{ipaas_workflow_executions}/tags ', 'WorkflowExecutions\WorkflowExecutionsController@tags');
+            Route::post('{ipaas_workflow_executions}/tags ', 'WorkflowExecutions\WorkflowExecutionsController@saveTags');
+            Route::get('{ipaas_workflow_executions}/addresses ', 'WorkflowExecutions\WorkflowExecutionsController@addresses');
+            Route::post('{ipaas_workflow_executions}/addresses ', 'WorkflowExecutions\WorkflowExecutionsController@saveAddresses');
+
+            Route::get('/{ipaas_workflow_executions}/{subObjects}', 'WorkflowExecutions\WorkflowExecutionsController@relatedObjects');
+            Route::get('/{ipaas_workflow_executions}', 'WorkflowExecutions\WorkflowExecutionsController@show');
+
+            Route::post('/', 'WorkflowExecutions\WorkflowExecutionsController@store');
+            Route::post('/{ipaas_workflow_executions}/do/{action}', 'WorkflowExecutions\WorkflowExecutionsController@doAction');
+
+            Route::patch('/{ipaas_workflow_executions}', 'WorkflowExecutions\WorkflowExecutionsController@update');
+            Route::delete('/{ipaas_workflow_executions}', 'WorkflowExecutions\WorkflowExecutionsController@destroy');
+        }
+    );
+
+    Route::prefix('workflow-daily-stats')->group(
+        function () {
+            Route::get('/', 'WorkflowDailyStats\WorkflowDailyStatsController@index');
+            Route::get('/actions', 'WorkflowDailyStats\WorkflowDailyStatsController@getActions');
+
+            Route::get('{ipaas_workflow_daily_stats}/tags ', 'WorkflowDailyStats\WorkflowDailyStatsController@tags');
+            Route::post('{ipaas_workflow_daily_stats}/tags ', 'WorkflowDailyStats\WorkflowDailyStatsController@saveTags');
+            Route::get('{ipaas_workflow_daily_stats}/addresses ', 'WorkflowDailyStats\WorkflowDailyStatsController@addresses');
+            Route::post('{ipaas_workflow_daily_stats}/addresses ', 'WorkflowDailyStats\WorkflowDailyStatsController@saveAddresses');
+
+            Route::get('/{ipaas_workflow_daily_stats}/{subObjects}', 'WorkflowDailyStats\WorkflowDailyStatsController@relatedObjects');
+            Route::get('/{ipaas_workflow_daily_stats}', 'WorkflowDailyStats\WorkflowDailyStatsController@show');
+
+            Route::post('/', 'WorkflowDailyStats\WorkflowDailyStatsController@store');
+            Route::post('/{ipaas_workflow_daily_stats}/do/{action}', 'WorkflowDailyStats\WorkflowDailyStatsController@doAction');
+
+            Route::patch('/{ipaas_workflow_daily_stats}', 'WorkflowDailyStats\WorkflowDailyStatsController@update');
+            Route::delete('/{ipaas_workflow_daily_stats}', 'WorkflowDailyStats\WorkflowDailyStatsController@destroy');
+        }
+    );
+
+    Route::prefix('workflow-executions-perspective')->group(
+        function () {
+            Route::get('/', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@index');
+            Route::get('/actions', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@getActions');
+
+            Route::get('{iwep}/tags ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@tags');
+            Route::post('{iwep}/tags ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@saveTags');
+            Route::get('{iwep}/addresses ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@addresses');
+            Route::post('{iwep}/addresses ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@saveAddresses');
+
+            Route::get('/{iwep}/{subObjects}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@relatedObjects');
+            Route::get('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@show');
+
+            Route::post('/', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@store');
+            Route::post('/{iwep}/do/{action}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@doAction');
+
+            Route::patch('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@update');
+            Route::delete('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@destroy');
+        }
+    );
+
 // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 });

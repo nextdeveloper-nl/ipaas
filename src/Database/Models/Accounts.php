@@ -25,6 +25,7 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
+ * @property boolean $is_service_enabled
  */
 class Accounts extends Model
 {
@@ -44,6 +45,7 @@ class Accounts extends Model
     protected $fillable = [
             'limits',
             'iam_account_id',
+            'is_service_enabled',
     ];
 
     /**
@@ -71,6 +73,7 @@ class Accounts extends Model
     'created_at' => 'datetime',
     'updated_at' => 'datetime',
     'deleted_at' => 'datetime',
+    'is_service_enabled' => 'boolean',
     ];
 
     /**
@@ -132,4 +135,5 @@ class Accounts extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
 }

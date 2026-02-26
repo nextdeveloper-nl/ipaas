@@ -20,16 +20,16 @@ use NextDeveloper\Commons\Http\Transformers\MetaTransformer;
 use NextDeveloper\Commons\Http\Transformers\VotesTransformer;
 use NextDeveloper\Commons\Http\Transformers\AddressesTransformer;
 use NextDeveloper\Commons\Http\Transformers\PhoneNumbersTransformer;
-use NextDeveloper\IPAAS\Database\Models\Accounts;
+use NextDeveloper\IPAAS\Database\Models\WorkflowDailyStats;
 use NextDeveloper\Commons\Http\Transformers\AbstractTransformer;
 use NextDeveloper\IAM\Database\Scopes\AuthorizationScope;
 
 /**
- * Class AccountsTransformer. This class is being used to manipulate the data we are serving to the customer
+ * Class WorkflowDailyStatsTransformer. This class is being used to manipulate the data we are serving to the customer
  *
  * @package NextDeveloper\IPAAS\Http\Transformers
  */
-class AbstractAccountsTransformer extends AbstractTransformer
+class AbstractWorkflowDailyStatsTransformer extends AbstractTransformer
 {
 
     /**
@@ -48,28 +48,34 @@ class AbstractAccountsTransformer extends AbstractTransformer
     ];
 
     /**
-     * @param Accounts $model
+     * @param WorkflowDailyStats $model
      *
      * @return array
      */
-    public function transform(Accounts $model)
+    public function transform(WorkflowDailyStats $model)
     {
-                                                $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
+                                                $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
+                                                            $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
                         
         return $this->buildPayload(
             [
             'id'  =>  $model->uuid,
-            'limits'  =>  $model->limits,
+            'stat_date'  =>  $model->stat_date,
+            'ipaas_workflow_id'  =>  $ipaasWorkflowId ? $ipaasWorkflowId->uuid : null,
             'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
+            'total_executions'  =>  $model->total_executions,
+            'success_count'  =>  $model->success_count,
+            'error_count'  =>  $model->error_count,
+            'canceled_count'  =>  $model->canceled_count,
+            'avg_duration_ms'  =>  $model->avg_duration_ms,
+            'max_duration_ms'  =>  $model->max_duration_ms,
             'created_at'  =>  $model->created_at,
             'updated_at'  =>  $model->updated_at,
-            'deleted_at'  =>  $model->deleted_at,
-            'is_service_enabled'  =>  $model->is_service_enabled,
             ]
         );
     }
 
-    public function includeStates(Accounts $model)
+    public function includeStates(WorkflowDailyStats $model)
     {
         $states = States::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -78,7 +84,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($states, new StatesTransformer());
     }
 
-    public function includeActions(Accounts $model)
+    public function includeActions(WorkflowDailyStats $model)
     {
         $input = get_class($model);
         $input = str_replace('\\Database\\Models', '', $input);
@@ -90,7 +96,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($actions, new AvailableActionsTransformer());
     }
 
-    public function includeMedia(Accounts $model)
+    public function includeMedia(WorkflowDailyStats $model)
     {
         $media = Media::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -99,7 +105,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($media, new MediaTransformer());
     }
 
-    public function includeSocialMedia(Accounts $model)
+    public function includeSocialMedia(WorkflowDailyStats $model)
     {
         $socialMedia = SocialMedia::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -108,7 +114,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($socialMedia, new SocialMediaTransformer());
     }
 
-    public function includeComments(Accounts $model)
+    public function includeComments(WorkflowDailyStats $model)
     {
         $comments = Comments::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -117,7 +123,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($comments, new CommentsTransformer());
     }
 
-    public function includeVotes(Accounts $model)
+    public function includeVotes(WorkflowDailyStats $model)
     {
         $votes = Votes::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -126,7 +132,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($votes, new VotesTransformer());
     }
 
-    public function includeMeta(Accounts $model)
+    public function includeMeta(WorkflowDailyStats $model)
     {
         $meta = Meta::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -135,7 +141,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($meta, new MetaTransformer());
     }
 
-    public function includePhoneNumbers(Accounts $model)
+    public function includePhoneNumbers(WorkflowDailyStats $model)
     {
         $phoneNumbers = PhoneNumbers::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -144,7 +150,7 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($phoneNumbers, new PhoneNumbersTransformer());
     }
 
-    public function includeAddresses(Accounts $model)
+    public function includeAddresses(WorkflowDailyStats $model)
     {
         $addresses = Addresses::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -153,5 +159,4 @@ class AbstractAccountsTransformer extends AbstractTransformer
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
 }

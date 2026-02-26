@@ -2,12 +2,11 @@
 
 namespace NextDeveloper\IPAAS\Database\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use NextDeveloper\Commons\Database\Traits\HasStates;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use NextDeveloper\Commons\Database\Traits\Filterable;
-use NextDeveloper\IPAAS\Database\Observers\ProvidersObserver;
+use NextDeveloper\IPAAS\Database\Observers\WorkflowDailyStatsObserver;
 use NextDeveloper\Commons\Database\Traits\UuidId;
 use NextDeveloper\Commons\Database\Traits\HasObject;
 use NextDeveloper\Commons\Common\Cache\Traits\CleanCache;
@@ -15,35 +14,30 @@ use NextDeveloper\Commons\Database\Traits\Taggable;
 use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
 
 /**
- * Providers model.
+ * WorkflowDailyStats model.
  *
  * @package  NextDeveloper\IPAAS\Database\Models
  * @property integer $id
  * @property string $uuid
- * @property string $name
- * @property string $description
- * @property string $provider_type
- * @property boolean $is_default_wap
- * @property integer $iaas_virtual_machine_id
- * @property string $base_url
- * @property string $api_token
- * @property string $api_secret
- * @property string $external_account_id
- * @property string $region
+ * @property \Carbon\Carbon $stat_date
+ * @property integer $ipaas_workflow_id
  * @property integer $iam_account_id
- * @property integer $iam_user_id
+ * @property integer $total_executions
+ * @property integer $success_count
+ * @property integer $error_count
+ * @property integer $canceled_count
+ * @property integer $avg_duration_ms
+ * @property integer $max_duration_ms
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
  */
-class Providers extends Model
+class WorkflowDailyStats extends Model
 {
     use Filterable, UuidId, CleanCache, Taggable, HasStates, RunAsAdministrator, HasObject;
-    use SoftDeletes;
 
     public $timestamps = true;
 
-    protected $table = 'ipaas_providers';
+    protected $table = 'ipaas_workflow_daily_stats';
 
 
     /**
@@ -52,18 +46,15 @@ class Providers extends Model
     protected $guarded = [];
 
     protected $fillable = [
-            'name',
-            'description',
-            'provider_type',
-            'is_default_wap',
-            'iaas_virtual_machine_id',
-            'base_url',
-            'api_token',
-            'api_secret',
-            'external_account_id',
-            'region',
+            'stat_date',
+            'ipaas_workflow_id',
             'iam_account_id',
-            'iam_user_id',
+            'total_executions',
+            'success_count',
+            'error_count',
+            'canceled_count',
+            'avg_duration_ms',
+            'max_duration_ms',
     ];
 
     /**
@@ -86,20 +77,17 @@ class Providers extends Model
      @var array
      */
     protected $casts = [
-        'id'                      => 'integer',
-        'name'                    => 'string',
-        'description'             => 'string',
-        'provider_type'           => 'string',
-        'is_default_wap'          => 'boolean',
-        'iaas_virtual_machine_id' => 'integer',
-        'base_url'                => 'string',
-        'api_token'               => 'encrypted',
-        'api_secret'              => 'encrypted',
-        'external_account_id'     => 'string',
-        'region'                  => 'string',
-        'created_at'              => 'datetime',
-        'updated_at'              => 'datetime',
-        'deleted_at'              => 'datetime',
+    'id' => 'integer',
+    'stat_date' => 'datetime',
+    'ipaas_workflow_id' => 'integer',
+    'total_executions' => 'integer',
+    'success_count' => 'integer',
+    'error_count' => 'integer',
+    'canceled_count' => 'integer',
+    'avg_duration_ms' => 'integer',
+    'max_duration_ms' => 'integer',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
     ];
 
     /**
@@ -108,9 +96,9 @@ class Providers extends Model
      @var array
      */
     protected $dates = [
+    'stat_date',
     'created_at',
     'updated_at',
-    'deleted_at',
     ];
 
     /**
@@ -133,7 +121,7 @@ class Providers extends Model
         parent::boot();
 
         //  We create and add Observer even if we wont use it.
-        parent::observe(ProvidersObserver::class);
+        parent::observe(WorkflowDailyStatsObserver::class);
 
         self::registerScopes();
     }
@@ -141,7 +129,7 @@ class Providers extends Model
     public static function registerScopes()
     {
         $globalScopes = config('ipaas.scopes.global');
-        $modelScopes = config('ipaas.scopes.ipaas_providers');
+        $modelScopes = config('ipaas.scopes.ipaas_workflow_daily_stats');
 
         if(!$modelScopes) { $modelScopes = [];
         }
@@ -161,5 +149,4 @@ class Providers extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
 }
