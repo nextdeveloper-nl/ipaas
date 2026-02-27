@@ -3,9 +3,14 @@
 namespace NextDeveloper\IPAAS;
 
 use NextDeveloper\Commons\AbstractServiceProvider;
+use NextDeveloper\IPAAS\Console\Commands\SyncMakeCommand;
+use NextDeveloper\IPAAS\Console\Commands\SyncMakeExecutionsCommand;
+use NextDeveloper\IPAAS\Console\Commands\SyncMakeScenariosCommand;
 use NextDeveloper\IPAAS\Console\Commands\SyncN8NCommand;
 use NextDeveloper\IPAAS\Console\Commands\SyncN8NExecutionsCommand;
 use NextDeveloper\IPAAS\Console\Commands\SyncN8NWorkflowsCommand;
+use NextDeveloper\IPAAS\Console\Commands\SyncZapierCommand;
+use NextDeveloper\IPAAS\Console\Commands\SyncZapierWorkflowsCommand;
 
 /**
  * Class IPaasServiceProvider
@@ -116,6 +121,11 @@ class IPaasServiceProvider extends AbstractServiceProvider
                     SyncN8NCommand::class,
                     SyncN8NExecutionsCommand::class,
                     SyncN8NWorkflowsCommand::class,
+                    SyncMakeCommand::class,
+                    SyncMakeScenariosCommand::class,
+                    SyncMakeExecutionsCommand::class,
+                    SyncZapierCommand::class,
+                    SyncZapierWorkflowsCommand::class,
                 ]
             );
         }

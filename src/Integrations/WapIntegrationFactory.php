@@ -4,7 +4,9 @@ namespace NextDeveloper\IPAAS\Integrations;
 
 use NextDeveloper\IPAAS\Database\Models\Providers;
 use NextDeveloper\IPAAS\Integrations\Contracts\WapInterface;
+use NextDeveloper\IPAAS\Integrations\Make\MakeIntegration;
 use NextDeveloper\IPAAS\Integrations\N8N\N8NIntegration;
+use NextDeveloper\IPAAS\Integrations\Zapier\ZapierIntegration;
 
 /**
  * WapIntegrationFactory
@@ -28,9 +30,9 @@ class WapIntegrationFactory
      * @var array<string, class-string<WapInterface>>
      */
     private static array $registry = [
-        'n8n'  => N8NIntegration::class,
-        // 'make'   => MakeIntegration::class,
-        // 'zapier' => ZapierIntegration::class,
+        'n8n'    => N8NIntegration::class,
+        'make'   => MakeIntegration::class,
+        'zapier' => ZapierIntegration::class,
     ];
 
     /**
