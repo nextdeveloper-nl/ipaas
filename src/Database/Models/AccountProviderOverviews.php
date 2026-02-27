@@ -2,12 +2,11 @@
 
 namespace NextDeveloper\IPAAS\Database\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use NextDeveloper\Commons\Database\Traits\HasStates;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use NextDeveloper\Commons\Database\Traits\Filterable;
-use NextDeveloper\IPAAS\Database\Observers\WorkflowsObserver;
+use NextDeveloper\IPAAS\Database\Observers\AccountProviderOverviewsObserver;
 use NextDeveloper\Commons\Database\Traits\UuidId;
 use NextDeveloper\Commons\Database\Traits\HasObject;
 use NextDeveloper\Commons\Common\Cache\Traits\CleanCache;
@@ -15,33 +14,32 @@ use NextDeveloper\Commons\Database\Traits\Taggable;
 use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
 
 /**
- * Workflows model.
+ * AccountProviderOverviews model.
  *
  * @package  NextDeveloper\IPAAS\Database\Models
- * @property integer $id
- * @property string $uuid
- * @property string $name
- * @property string $description
- * @property string $trigger_type
- * @property string $status
- * @property string $current_version_id
- * @property integer $ipaas_provider_id
- * @property string $external_workflow_id
- * @property \Carbon\Carbon $last_synched_at
  * @property integer $iam_account_id
- * @property integer $iam_user_id
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
+ * @property integer $provider_id
+ * @property string $provider_uuid
+ * @property string $provider_name
+ * @property string $provider_type
+ * @property boolean $is_default_wap
+ * @property string $base_url
+ * @property integer $total_workflows
+ * @property integer $total_automation_engines
+ * @property integer $executions_today
+ * @property integer $success_today
+ * @property integer $errors_today
+ * @property $success_rate_today
+ * @property \Carbon\Carbon $provider_created_at
+ * @property \Carbon\Carbon $provider_updated_at
  */
-class Workflows extends Model
+class AccountProviderOverviews extends Model
 {
     use Filterable, UuidId, CleanCache, Taggable, HasStates, RunAsAdministrator, HasObject;
-    use SoftDeletes;
 
-    public $timestamps = true;
+    public $timestamps = false;
 
-    protected $table = 'ipaas_workflows';
+    protected $table = 'ipaas_account_provider_overview';
 
 
     /**
@@ -50,16 +48,21 @@ class Workflows extends Model
     protected $guarded = [];
 
     protected $fillable = [
-            'name',
-            'description',
-            'trigger_type',
-            'status',
-            'current_version_id',
-            'ipaas_provider_id',
-            'external_workflow_id',
-            'last_synched_at',
             'iam_account_id',
-            'iam_user_id',
+            'provider_id',
+            'provider_uuid',
+            'provider_name',
+            'provider_type',
+            'is_default_wap',
+            'base_url',
+            'total_workflows',
+            'total_automation_engines',
+            'executions_today',
+            'success_today',
+            'errors_today',
+            'success_rate_today',
+            'provider_created_at',
+            'provider_updated_at',
     ];
 
     /**
@@ -82,17 +85,18 @@ class Workflows extends Model
      @var array
      */
     protected $casts = [
-    'id' => 'integer',
-    'name' => 'string',
-    'description' => 'string',
-    'trigger_type' => 'string',
-    'status' => 'string',
-    'ipaas_provider_id' => 'integer',
-    'external_workflow_id' => 'string',
-    'last_synched_at' => 'datetime',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-    'deleted_at' => 'datetime',
+    'provider_id' => 'integer',
+    'provider_name' => 'string',
+    'provider_type' => 'string',
+    'is_default_wap' => 'boolean',
+    'base_url' => 'string',
+    'total_workflows' => 'integer',
+    'total_automation_engines' => 'integer',
+    'executions_today' => 'integer',
+    'success_today' => 'integer',
+    'errors_today' => 'integer',
+    'provider_created_at' => 'datetime',
+    'provider_updated_at' => 'datetime',
     ];
 
     /**
@@ -101,10 +105,8 @@ class Workflows extends Model
      @var array
      */
     protected $dates = [
-    'last_synched_at',
-    'created_at',
-    'updated_at',
-    'deleted_at',
+    'provider_created_at',
+    'provider_updated_at',
     ];
 
     /**
@@ -127,7 +129,7 @@ class Workflows extends Model
         parent::boot();
 
         //  We create and add Observer even if we wont use it.
-        parent::observe(WorkflowsObserver::class);
+        parent::observe(AccountProviderOverviewsObserver::class);
 
         self::registerScopes();
     }
@@ -135,7 +137,7 @@ class Workflows extends Model
     public static function registerScopes()
     {
         $globalScopes = config('ipaas.scopes.global');
-        $modelScopes = config('ipaas.scopes.ipaas_workflows');
+        $modelScopes = config('ipaas.scopes.ipaas_account_provider_overview');
 
         if(!$modelScopes) { $modelScopes = [];
         }
@@ -155,6 +157,4 @@ class Workflows extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
-
 }

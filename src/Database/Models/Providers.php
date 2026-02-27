@@ -25,9 +25,6 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  * @property string $provider_type
  * @property boolean $is_default_wap
  * @property integer $iaas_virtual_machine_id
- * @property string $base_url
- * @property string $api_token
- * @property string $api_secret
  * @property string $external_account_id
  * @property string $region
  * @property integer $iam_account_id
@@ -35,6 +32,9 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
+ * @property string $base_url
+ * @property string $api_token
+ * @property string $api_secret
  */
 class Providers extends Model
 {
@@ -57,13 +57,13 @@ class Providers extends Model
             'provider_type',
             'is_default_wap',
             'iaas_virtual_machine_id',
-            'base_url',
-            'api_token',
-            'api_secret',
             'external_account_id',
             'region',
             'iam_account_id',
             'iam_user_id',
+            'base_url',
+            'api_token',
+            'api_secret',
     ];
 
     /**
@@ -86,20 +86,20 @@ class Providers extends Model
      @var array
      */
     protected $casts = [
-        'id'                      => 'integer',
-        'name'                    => 'string',
-        'description'             => 'string',
-        'provider_type'           => 'string',
-        'is_default_wap'          => 'boolean',
-        'iaas_virtual_machine_id' => 'integer',
-        'base_url'                => 'string',
-        'api_token'               => 'encrypted',
-        'api_secret'              => 'encrypted',
-        'external_account_id'     => 'string',
-        'region'                  => 'string',
-        'created_at'              => 'datetime',
-        'updated_at'              => 'datetime',
-        'deleted_at'              => 'datetime',
+    'id' => 'integer',
+    'name' => 'string',
+    'description' => 'string',
+    'provider_type' => 'string',
+    'is_default_wap' => 'boolean',
+    'iaas_virtual_machine_id' => 'integer',
+    'external_account_id' => 'string',
+    'region' => 'string',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+    'deleted_at' => 'datetime',
+    'base_url' => 'string',
+    'api_token' => 'string',
+    'api_secret' => 'string',
     ];
 
     /**
@@ -161,5 +161,6 @@ class Providers extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
 
 }

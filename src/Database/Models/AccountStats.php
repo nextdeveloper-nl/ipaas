@@ -2,12 +2,11 @@
 
 namespace NextDeveloper\IPAAS\Database\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use NextDeveloper\Commons\Database\Traits\HasStates;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use NextDeveloper\Commons\Database\Traits\Filterable;
-use NextDeveloper\IPAAS\Database\Observers\WorkflowsObserver;
+use NextDeveloper\IPAAS\Database\Observers\AccountStatsObserver;
 use NextDeveloper\Commons\Database\Traits\UuidId;
 use NextDeveloper\Commons\Database\Traits\HasObject;
 use NextDeveloper\Commons\Common\Cache\Traits\CleanCache;
@@ -15,33 +14,24 @@ use NextDeveloper\Commons\Database\Traits\Taggable;
 use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
 
 /**
- * Workflows model.
+ * AccountStats model.
  *
  * @package  NextDeveloper\IPAAS\Database\Models
- * @property integer $id
- * @property string $uuid
- * @property string $name
- * @property string $description
- * @property string $trigger_type
- * @property string $status
- * @property string $current_version_id
- * @property integer $ipaas_provider_id
- * @property string $external_workflow_id
- * @property \Carbon\Carbon $last_synched_at
  * @property integer $iam_account_id
- * @property integer $iam_user_id
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
+ * @property integer $total_providers
+ * @property integer $total_workflows
+ * @property integer $executions_today
+ * @property integer $success_today
+ * @property integer $errors_today
+ * @property $success_rate_today
  */
-class Workflows extends Model
+class AccountStats extends Model
 {
     use Filterable, UuidId, CleanCache, Taggable, HasStates, RunAsAdministrator, HasObject;
-    use SoftDeletes;
 
-    public $timestamps = true;
+    public $timestamps = false;
 
-    protected $table = 'ipaas_workflows';
+    protected $table = 'ipaas_account_stats';
 
 
     /**
@@ -50,16 +40,13 @@ class Workflows extends Model
     protected $guarded = [];
 
     protected $fillable = [
-            'name',
-            'description',
-            'trigger_type',
-            'status',
-            'current_version_id',
-            'ipaas_provider_id',
-            'external_workflow_id',
-            'last_synched_at',
             'iam_account_id',
-            'iam_user_id',
+            'total_providers',
+            'total_workflows',
+            'executions_today',
+            'success_today',
+            'errors_today',
+            'success_rate_today',
     ];
 
     /**
@@ -82,17 +69,11 @@ class Workflows extends Model
      @var array
      */
     protected $casts = [
-    'id' => 'integer',
-    'name' => 'string',
-    'description' => 'string',
-    'trigger_type' => 'string',
-    'status' => 'string',
-    'ipaas_provider_id' => 'integer',
-    'external_workflow_id' => 'string',
-    'last_synched_at' => 'datetime',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-    'deleted_at' => 'datetime',
+    'total_providers' => 'integer',
+    'total_workflows' => 'integer',
+    'executions_today' => 'integer',
+    'success_today' => 'integer',
+    'errors_today' => 'integer',
     ];
 
     /**
@@ -101,10 +82,7 @@ class Workflows extends Model
      @var array
      */
     protected $dates = [
-    'last_synched_at',
-    'created_at',
-    'updated_at',
-    'deleted_at',
+
     ];
 
     /**
@@ -127,7 +105,7 @@ class Workflows extends Model
         parent::boot();
 
         //  We create and add Observer even if we wont use it.
-        parent::observe(WorkflowsObserver::class);
+        parent::observe(AccountStatsObserver::class);
 
         self::registerScopes();
     }
@@ -135,7 +113,7 @@ class Workflows extends Model
     public static function registerScopes()
     {
         $globalScopes = config('ipaas.scopes.global');
-        $modelScopes = config('ipaas.scopes.ipaas_workflows');
+        $modelScopes = config('ipaas.scopes.ipaas_account_stats');
 
         if(!$modelScopes) { $modelScopes = [];
         }
@@ -155,6 +133,4 @@ class Workflows extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
-
 }

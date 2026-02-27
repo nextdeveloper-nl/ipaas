@@ -63,6 +63,9 @@ trait IpaasProviderTestTraits
                 'provider_type'  =>  'a',
                 'external_account_id'  =>  'a',
                 'region'  =>  'a',
+                'base_url'  =>  'a',
+                'api_token'  =>  'a',
+                'api_secret'  =>  'a',
                             ],
                 ['http_errors' => false]
             ]
@@ -427,6 +430,63 @@ trait IpaasProviderTestTraits
             $request = new Request(
                 [
                 'region'  =>  'a'
+                ]
+            );
+
+            $filter = new IpaasProviderQueryFilter($request);
+
+            $model = \NextDeveloper\IPAAS\Database\Models\IpaasProvider::filter($filter)->first();
+        } catch (\Exception $e) {
+            $this->assertFalse(false, $e->getMessage());
+        }
+
+        $this->assertTrue(true);
+    }
+
+    public function test_ipaasprovider_event_base_url_filter()
+    {
+        try {
+            $request = new Request(
+                [
+                'base_url'  =>  'a'
+                ]
+            );
+
+            $filter = new IpaasProviderQueryFilter($request);
+
+            $model = \NextDeveloper\IPAAS\Database\Models\IpaasProvider::filter($filter)->first();
+        } catch (\Exception $e) {
+            $this->assertFalse(false, $e->getMessage());
+        }
+
+        $this->assertTrue(true);
+    }
+
+    public function test_ipaasprovider_event_api_token_filter()
+    {
+        try {
+            $request = new Request(
+                [
+                'api_token'  =>  'a'
+                ]
+            );
+
+            $filter = new IpaasProviderQueryFilter($request);
+
+            $model = \NextDeveloper\IPAAS\Database\Models\IpaasProvider::filter($filter)->first();
+        } catch (\Exception $e) {
+            $this->assertFalse(false, $e->getMessage());
+        }
+
+        $this->assertTrue(true);
+    }
+
+    public function test_ipaasprovider_event_api_secret_filter()
+    {
+        try {
+            $request = new Request(
+                [
+                'api_secret'  =>  'a'
                 ]
             );
 

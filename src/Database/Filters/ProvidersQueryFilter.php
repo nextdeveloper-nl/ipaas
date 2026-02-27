@@ -57,6 +57,39 @@ class ProvidersQueryFilter extends AbstractQueryFilter
         return $this->builder->where('region', 'ilike', '%' . $value . '%');
     }
 
+        
+    public function baseUrl($value)
+    {
+        return $this->builder->where('base_url', 'ilike', '%' . $value . '%');
+    }
+
+        //  This is an alias function of baseUrl
+    public function base_url($value)
+    {
+        return $this->baseUrl($value);
+    }
+        
+    public function apiToken($value)
+    {
+        return $this->builder->where('api_token', 'ilike', '%' . $value . '%');
+    }
+
+        //  This is an alias function of apiToken
+    public function api_token($value)
+    {
+        return $this->apiToken($value);
+    }
+        
+    public function apiSecret($value)
+    {
+        return $this->builder->where('api_secret', 'ilike', '%' . $value . '%');
+    }
+
+        //  This is an alias function of apiSecret
+    public function api_secret($value)
+    {
+        return $this->apiSecret($value);
+    }
     
     public function isDefaultWap($value)
     {
@@ -186,5 +219,6 @@ class ProvidersQueryFilter extends AbstractQueryFilter
 
     
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
 
 }

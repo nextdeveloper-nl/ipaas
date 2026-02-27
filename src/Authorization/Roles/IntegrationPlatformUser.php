@@ -58,6 +58,9 @@ class IntegrationPlatformUser extends AbstractRole implements IAuthorizationRole
     public function allowedOperations(): array
     {
         return [
+            'ipaas_account_stats:read',
+            'ipaas_account_provider_overview:read',
+
             'ipaas_accounts:read',
             'ipaas_accounts:create',
             'ipaas_accounts:update',

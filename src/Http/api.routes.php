@@ -127,6 +127,49 @@ Route::prefix('ipaas')->group(function () {
         }
     );
 
+    Route::prefix('account-provider-overview')->group(
+        function () {
+            Route::get('/', 'AccountProviderOverview\AccountProviderOverviewController@index');
+            Route::get('/actions', 'AccountProviderOverview\AccountProviderOverviewController@getActions');
+
+            Route::get('{ipaas_account_provider_overview}/tags ', 'AccountProviderOverview\AccountProviderOverviewController@tags');
+            Route::post('{ipaas_account_provider_overview}/tags ', 'AccountProviderOverview\AccountProviderOverviewController@saveTags');
+            Route::get('{ipaas_account_provider_overview}/addresses ', 'AccountProviderOverview\AccountProviderOverviewController@addresses');
+            Route::post('{ipaas_account_provider_overview}/addresses ', 'AccountProviderOverview\AccountProviderOverviewController@saveAddresses');
+
+            Route::get('/{ipaas_account_provider_overview}/{subObjects}', 'AccountProviderOverview\AccountProviderOverviewController@relatedObjects');
+            Route::get('/{ipaas_account_provider_overview}', 'AccountProviderOverview\AccountProviderOverviewController@show');
+
+            Route::post('/', 'AccountProviderOverview\AccountProviderOverviewController@store');
+            Route::post('/{ipaas_account_provider_overview}/do/{action}', 'AccountProviderOverview\AccountProviderOverviewController@doAction');
+
+            Route::patch('/{ipaas_account_provider_overview}', 'AccountProviderOverview\AccountProviderOverviewController@update');
+            Route::delete('/{ipaas_account_provider_overview}', 'AccountProviderOverview\AccountProviderOverviewController@destroy');
+        }
+    );
+
+    Route::prefix('account-stats')->group(
+        function () {
+            Route::get('/', 'AccountStats\AccountStatsController@index');
+            Route::get('/actions', 'AccountStats\AccountStatsController@getActions');
+
+            Route::get('{ipaas_account_stats}/tags ', 'AccountStats\AccountStatsController@tags');
+            Route::post('{ipaas_account_stats}/tags ', 'AccountStats\AccountStatsController@saveTags');
+            Route::get('{ipaas_account_stats}/addresses ', 'AccountStats\AccountStatsController@addresses');
+            Route::post('{ipaas_account_stats}/addresses ', 'AccountStats\AccountStatsController@saveAddresses');
+
+            Route::get('/{ipaas_account_stats}/{subObjects}', 'AccountStats\AccountStatsController@relatedObjects');
+            Route::get('/{ipaas_account_stats}', 'AccountStats\AccountStatsController@show');
+
+            Route::post('/', 'AccountStats\AccountStatsController@store');
+            Route::post('/{ipaas_account_stats}/do/{action}', 'AccountStats\AccountStatsController@doAction');
+
+            Route::patch('/{ipaas_account_stats}', 'AccountStats\AccountStatsController@update');
+            Route::delete('/{ipaas_account_stats}', 'AccountStats\AccountStatsController@destroy');
+        }
+    );
+
 // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
-});
+}
+);
