@@ -20,16 +20,16 @@ use NextDeveloper\Commons\Http\Transformers\MetaTransformer;
 use NextDeveloper\Commons\Http\Transformers\VotesTransformer;
 use NextDeveloper\Commons\Http\Transformers\AddressesTransformer;
 use NextDeveloper\Commons\Http\Transformers\PhoneNumbersTransformer;
-use NextDeveloper\IPAAS\Database\Models\WorkflowExecutionsPerspective;
+use NextDeveloper\IPAAS\Database\Models\ExecutionDailyStats;
 use NextDeveloper\Commons\Http\Transformers\AbstractTransformer;
 use NextDeveloper\IAM\Database\Scopes\AuthorizationScope;
 
 /**
- * Class WorkflowExecutionsPerspectiveTransformer. This class is being used to manipulate the data we are serving to the customer
+ * Class ExecutionDailyStatsTransformer. This class is being used to manipulate the data we are serving to the customer
  *
  * @package NextDeveloper\IPAAS\Http\Transformers
  */
-class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransformer
+class AbstractExecutionDailyStatsTransformer extends AbstractTransformer
 {
 
     /**
@@ -48,39 +48,33 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
     ];
 
     /**
-     * @param WorkflowExecutionsPerspective $model
+     * @param ExecutionDailyStats $model
      *
      * @return array
      */
-    public function transform(WorkflowExecutionsPerspective $model)
+    public function transform(ExecutionDailyStats $model)
     {
-                                                $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
+                                                $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
                                                             $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
-                                                            $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
                         
         return $this->buildPayload(
             [
-            'id'  =>  $model->uuid,
-            'status'  =>  $model->status,
-            'trigger_mode'  =>  $model->trigger_mode,
-            'started_at'  =>  $model->started_at,
-            'finished_at'  =>  $model->finished_at,
-            'duration_ms'  =>  $model->duration_ms,
-            'error_message'  =>  $model->error_message,
-            'error_node'  =>  $model->error_node,
-            'ipaas_workflow_id'  =>  $ipaasWorkflowId ? $ipaasWorkflowId->uuid : null,
-            'workflow_name'  =>  $model->workflow_name,
+            'id'  =>  $model->id,
+            'stat_date'  =>  $model->stat_date,
+            'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
             'ipaas_provider_id'  =>  $ipaasProviderId ? $ipaasProviderId->uuid : null,
             'provider_name'  =>  $model->provider_name,
             'provider_type'  =>  $model->provider_type,
-            'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
-            'created_at'  =>  $model->created_at,
-            'updated_at'  =>  $model->updated_at,
+            'total_executions'  =>  $model->total_executions,
+            'success_count'  =>  $model->success_count,
+            'error_count'  =>  $model->error_count,
+            'canceled_count'  =>  $model->canceled_count,
+            'success_rate'  =>  $model->success_rate,
             ]
         );
     }
 
-    public function includeStates(WorkflowExecutionsPerspective $model)
+    public function includeStates(ExecutionDailyStats $model)
     {
         $states = States::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -89,7 +83,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($states, new StatesTransformer());
     }
 
-    public function includeActions(WorkflowExecutionsPerspective $model)
+    public function includeActions(ExecutionDailyStats $model)
     {
         $input = get_class($model);
         $input = str_replace('\\Database\\Models', '', $input);
@@ -101,7 +95,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($actions, new AvailableActionsTransformer());
     }
 
-    public function includeMedia(WorkflowExecutionsPerspective $model)
+    public function includeMedia(ExecutionDailyStats $model)
     {
         $media = Media::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -110,7 +104,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($media, new MediaTransformer());
     }
 
-    public function includeSocialMedia(WorkflowExecutionsPerspective $model)
+    public function includeSocialMedia(ExecutionDailyStats $model)
     {
         $socialMedia = SocialMedia::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -119,7 +113,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($socialMedia, new SocialMediaTransformer());
     }
 
-    public function includeComments(WorkflowExecutionsPerspective $model)
+    public function includeComments(ExecutionDailyStats $model)
     {
         $comments = Comments::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -128,7 +122,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($comments, new CommentsTransformer());
     }
 
-    public function includeVotes(WorkflowExecutionsPerspective $model)
+    public function includeVotes(ExecutionDailyStats $model)
     {
         $votes = Votes::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -137,7 +131,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($votes, new VotesTransformer());
     }
 
-    public function includeMeta(WorkflowExecutionsPerspective $model)
+    public function includeMeta(ExecutionDailyStats $model)
     {
         $meta = Meta::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -146,7 +140,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($meta, new MetaTransformer());
     }
 
-    public function includePhoneNumbers(WorkflowExecutionsPerspective $model)
+    public function includePhoneNumbers(ExecutionDailyStats $model)
     {
         $phoneNumbers = PhoneNumbers::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -155,7 +149,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($phoneNumbers, new PhoneNumbersTransformer());
     }
 
-    public function includeAddresses(WorkflowExecutionsPerspective $model)
+    public function includeAddresses(ExecutionDailyStats $model)
     {
         $addresses = Addresses::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -164,6 +158,12 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
+
+
+
+
 
 
 

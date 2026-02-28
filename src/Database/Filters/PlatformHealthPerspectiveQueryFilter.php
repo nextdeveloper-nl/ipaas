@@ -10,7 +10,7 @@ use NextDeveloper\Commons\Database\Filters\AbstractQueryFilter;
  * This class automatically puts where clause on database so that use can filter
  * data returned from the query.
  */
-class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
+class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
 {
 
     /**
@@ -18,15 +18,15 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
      */
     protected $builder;
     
-    public function ipaasProviderName($value)
+    public function providerName($value)
     {
-        return $this->builder->where('ipaas_provider_name', 'ilike', '%' . $value . '%');
+        return $this->builder->where('provider_name', 'ilike', '%' . $value . '%');
     }
 
-        //  This is an alias function of ipaasProviderName
-    public function ipaas_provider_name($value)
+        //  This is an alias function of providerName
+    public function provider_name($value)
     {
-        return $this->ipaasProviderName($value);
+        return $this->providerName($value);
     }
         
     public function providerType($value)
@@ -40,18 +40,29 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
         return $this->providerType($value);
     }
         
-    public function baseUrl($value)
+    public function lastExecutionStatus($value)
     {
-        return $this->builder->where('base_url', 'ilike', '%' . $value . '%');
+        return $this->builder->where('last_execution_status', 'ilike', '%' . $value . '%');
     }
 
-        //  This is an alias function of baseUrl
-    public function base_url($value)
+        //  This is an alias function of lastExecutionStatus
+    public function last_execution_status($value)
     {
-        return $this->baseUrl($value);
+        return $this->lastExecutionStatus($value);
+    }
+        
+    public function healthStatus($value)
+    {
+        return $this->builder->where('health_status', 'ilike', '%' . $value . '%');
+    }
+
+        //  This is an alias function of healthStatus
+    public function health_status($value)
+    {
+        return $this->healthStatus($value);
     }
     
-    public function totalWorkflows($value)
+    public function activeWorkflows($value)
     {
         $operator = substr($value, 0, 1);
 
@@ -61,32 +72,13 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
             $value = substr($value, 1);
         }
 
-        return $this->builder->where('total_workflows', $operator, $value);
+        return $this->builder->where('active_workflows', $operator, $value);
     }
 
-        //  This is an alias function of totalWorkflows
-    public function total_workflows($value)
+        //  This is an alias function of activeWorkflows
+    public function active_workflows($value)
     {
-        return $this->totalWorkflows($value);
-    }
-    
-    public function totalAutomationEngines($value)
-    {
-        $operator = substr($value, 0, 1);
-
-        if ($operator != '<' || $operator != '>') {
-            $operator = '=';
-        } else {
-            $value = substr($value, 1);
-        }
-
-        return $this->builder->where('total_automation_engines', $operator, $value);
-    }
-
-        //  This is an alias function of totalAutomationEngines
-    public function total_automation_engines($value)
-    {
-        return $this->totalAutomationEngines($value);
+        return $this->activeWorkflows($value);
     }
     
     public function executionsToday($value)
@@ -146,6 +138,25 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
         return $this->errorsToday($value);
     }
     
+    public function runningToday($value)
+    {
+        $operator = substr($value, 0, 1);
+
+        if ($operator != '<' || $operator != '>') {
+            $operator = '=';
+        } else {
+            $value = substr($value, 1);
+        }
+
+        return $this->builder->where('running_today', $operator, $value);
+    }
+
+        //  This is an alias function of runningToday
+    public function running_today($value)
+    {
+        return $this->runningToday($value);
+    }
+    
     public function isDefaultWap($value)
     {
         return $this->builder->where('is_default_wap', $value);
@@ -157,6 +168,28 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
         return $this->isDefaultWap($value);
     }
      
+    public function lastExecutionAtStart($date)
+    {
+        return $this->builder->where('last_execution_at', '>=', $date);
+    }
+
+    public function lastExecutionAtEnd($date)
+    {
+        return $this->builder->where('last_execution_at', '<=', $date);
+    }
+
+    //  This is an alias function of lastExecutionAt
+    public function last_execution_at_start($value)
+    {
+        return $this->lastExecutionAtStart($value);
+    }
+
+    //  This is an alias function of lastExecutionAt
+    public function last_execution_at_end($value)
+    {
+        return $this->lastExecutionAtEnd($value);
+    }
+
     public function providerCreatedAtStart($date)
     {
         return $this->builder->where('provider_created_at', '>=', $date);
@@ -179,28 +212,6 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
         return $this->providerCreatedAtEnd($value);
     }
 
-    public function providerUpdatedAtStart($date)
-    {
-        return $this->builder->where('provider_updated_at', '>=', $date);
-    }
-
-    public function providerUpdatedAtEnd($date)
-    {
-        return $this->builder->where('provider_updated_at', '<=', $date);
-    }
-
-    //  This is an alias function of providerUpdatedAt
-    public function provider_updated_at_start($value)
-    {
-        return $this->providerUpdatedAtStart($value);
-    }
-
-    //  This is an alias function of providerUpdatedAt
-    public function provider_updated_at_end($value)
-    {
-        return $this->providerUpdatedAtEnd($value);
-    }
-
     public function iamAccountId($value)
     {
             $iamAccount = \NextDeveloper\IAM\Database\Models\Accounts::where('uuid', $value)->first();
@@ -211,22 +222,26 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     }
 
     
-    public function ipaasProviderId($value)
+    public function providerId($value)
     {
-            $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
+            $provider = \NextDeveloper\\Database\Models\Providers::where('uuid', $value)->first();
 
-        if($ipaasProvider) {
-            return $this->builder->where('ipaas_provider_id', '=', $ipaasProvider->id);
+        if($provider) {
+            return $this->builder->where('provider_id', '=', $provider->id);
         }
     }
 
-        //  This is an alias function of ipaasProvider
-    public function ipaas_provider_id($value)
+        //  This is an alias function of provider
+    public function provider_id($value)
     {
-        return $this->ipaasProvider($value);
+        return $this->provider($value);
     }
     
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
+
+
 
 
 

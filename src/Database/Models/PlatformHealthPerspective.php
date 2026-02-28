@@ -6,7 +6,7 @@ use NextDeveloper\Commons\Database\Traits\HasStates;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use NextDeveloper\Commons\Database\Traits\Filterable;
-use NextDeveloper\IPAAS\Database\Observers\AccountStatsObserver;
+use NextDeveloper\IPAAS\Database\Observers\PlatformHealthPerspectiveObserver;
 use NextDeveloper\Commons\Database\Traits\UuidId;
 use NextDeveloper\Commons\Database\Traits\HasObject;
 use NextDeveloper\Commons\Common\Cache\Traits\CleanCache;
@@ -14,24 +14,33 @@ use NextDeveloper\Commons\Database\Traits\Taggable;
 use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
 
 /**
- * AccountStats model.
+ * PlatformHealthPerspective model.
  *
  * @package  NextDeveloper\IPAAS\Database\Models
  * @property integer $iam_account_id
- * @property integer $total_providers
- * @property integer $total_workflows
+ * @property integer $provider_id
+ * @property string $provider_uuid
+ * @property string $provider_name
+ * @property string $provider_type
+ * @property boolean $is_default_wap
+ * @property integer $active_workflows
  * @property integer $executions_today
  * @property integer $success_today
  * @property integer $errors_today
+ * @property integer $running_today
  * @property $success_rate_today
+ * @property \Carbon\Carbon $last_execution_at
+ * @property string $last_execution_status
+ * @property string $health_status
+ * @property \Carbon\Carbon $provider_created_at
  */
-class AccountStats extends Model
+class PlatformHealthPerspective extends Model
 {
     use Filterable, UuidId, CleanCache, Taggable, HasStates, RunAsAdministrator, HasObject;
 
     public $timestamps = false;
 
-    protected $table = 'ipaas_account_stats';
+    protected $table = 'ipaas_platform_health_perspective';
 
 
     /**
@@ -41,12 +50,21 @@ class AccountStats extends Model
 
     protected $fillable = [
             'iam_account_id',
-            'total_providers',
-            'total_workflows',
+            'provider_id',
+            'provider_uuid',
+            'provider_name',
+            'provider_type',
+            'is_default_wap',
+            'active_workflows',
             'executions_today',
             'success_today',
             'errors_today',
+            'running_today',
             'success_rate_today',
+            'last_execution_at',
+            'last_execution_status',
+            'health_status',
+            'provider_created_at',
     ];
 
     /**
@@ -69,11 +87,19 @@ class AccountStats extends Model
      @var array
      */
     protected $casts = [
-    'total_providers' => 'integer',
-    'total_workflows' => 'integer',
+    'provider_id' => 'integer',
+    'provider_name' => 'string',
+    'provider_type' => 'string',
+    'is_default_wap' => 'boolean',
+    'active_workflows' => 'integer',
     'executions_today' => 'integer',
     'success_today' => 'integer',
     'errors_today' => 'integer',
+    'running_today' => 'integer',
+    'last_execution_at' => 'datetime',
+    'last_execution_status' => 'string',
+    'health_status' => 'string',
+    'provider_created_at' => 'datetime',
     ];
 
     /**
@@ -82,7 +108,8 @@ class AccountStats extends Model
      @var array
      */
     protected $dates = [
-
+    'last_execution_at',
+    'provider_created_at',
     ];
 
     /**
@@ -105,7 +132,7 @@ class AccountStats extends Model
         parent::boot();
 
         //  We create and add Observer even if we wont use it.
-        parent::observe(AccountStatsObserver::class);
+        parent::observe(PlatformHealthPerspectiveObserver::class);
 
         self::registerScopes();
     }
@@ -113,7 +140,7 @@ class AccountStats extends Model
     public static function registerScopes()
     {
         $globalScopes = config('ipaas.scopes.global');
-        $modelScopes = config('ipaas.scopes.ipaas_account_stats');
+        $modelScopes = config('ipaas.scopes.ipaas_platform_health_perspective');
 
         if(!$modelScopes) { $modelScopes = [];
         }
@@ -133,7 +160,6 @@ class AccountStats extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
 
 
 

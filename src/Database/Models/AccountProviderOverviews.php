@@ -18,9 +18,9 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  *
  * @package  NextDeveloper\IPAAS\Database\Models
  * @property integer $iam_account_id
- * @property integer $provider_id
- * @property string $provider_uuid
- * @property string $provider_name
+ * @property integer $ipaas_provider_id
+ * @property string $ipaas_provider_uuid
+ * @property string $ipaas_provider_name
  * @property string $provider_type
  * @property boolean $is_default_wap
  * @property string $base_url
@@ -39,7 +39,7 @@ class AccountProviderOverviews extends Model
 
     public $timestamps = false;
 
-    protected $table = 'ipaas_account_provider_overview';
+    protected $table = 'ipaas_account_provider_overviews';
 
 
     /**
@@ -49,9 +49,9 @@ class AccountProviderOverviews extends Model
 
     protected $fillable = [
             'iam_account_id',
-            'provider_id',
-            'provider_uuid',
-            'provider_name',
+            'ipaas_provider_id',
+            'ipaas_provider_uuid',
+            'ipaas_provider_name',
             'provider_type',
             'is_default_wap',
             'base_url',
@@ -85,8 +85,8 @@ class AccountProviderOverviews extends Model
      @var array
      */
     protected $casts = [
-    'provider_id' => 'integer',
-    'provider_name' => 'string',
+    'ipaas_provider_id' => 'integer',
+    'ipaas_provider_name' => 'string',
     'provider_type' => 'string',
     'is_default_wap' => 'boolean',
     'base_url' => 'string',
@@ -137,7 +137,7 @@ class AccountProviderOverviews extends Model
     public static function registerScopes()
     {
         $globalScopes = config('ipaas.scopes.global');
-        $modelScopes = config('ipaas.scopes.ipaas_account_provider_overview');
+        $modelScopes = config('ipaas.scopes.ipaas_account_provider_overviews');
 
         if(!$modelScopes) { $modelScopes = [];
         }
@@ -157,4 +157,10 @@ class AccountProviderOverviews extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
+
+
+
+
 }

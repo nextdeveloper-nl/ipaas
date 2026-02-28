@@ -20,16 +20,16 @@ use NextDeveloper\Commons\Http\Transformers\MetaTransformer;
 use NextDeveloper\Commons\Http\Transformers\VotesTransformer;
 use NextDeveloper\Commons\Http\Transformers\AddressesTransformer;
 use NextDeveloper\Commons\Http\Transformers\PhoneNumbersTransformer;
-use NextDeveloper\IPAAS\Database\Models\WorkflowExecutionsPerspective;
+use NextDeveloper\IPAAS\Database\Models\PlatformHealthPerspective;
 use NextDeveloper\Commons\Http\Transformers\AbstractTransformer;
 use NextDeveloper\IAM\Database\Scopes\AuthorizationScope;
 
 /**
- * Class WorkflowExecutionsPerspectiveTransformer. This class is being used to manipulate the data we are serving to the customer
+ * Class PlatformHealthPerspectiveTransformer. This class is being used to manipulate the data we are serving to the customer
  *
  * @package NextDeveloper\IPAAS\Http\Transformers
  */
-class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransformer
+class AbstractPlatformHealthPerspectiveTransformer extends AbstractTransformer
 {
 
     /**
@@ -48,39 +48,39 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
     ];
 
     /**
-     * @param WorkflowExecutionsPerspective $model
+     * @param PlatformHealthPerspective $model
      *
      * @return array
      */
-    public function transform(WorkflowExecutionsPerspective $model)
+    public function transform(PlatformHealthPerspective $model)
     {
-                                                $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
-                                                            $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
-                                                            $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
+                                                $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
+                                                            $providerId = \NextDeveloper\\Database\Models\Providers::where('id', $model->provider_id)->first();
                         
         return $this->buildPayload(
             [
-            'id'  =>  $model->uuid,
-            'status'  =>  $model->status,
-            'trigger_mode'  =>  $model->trigger_mode,
-            'started_at'  =>  $model->started_at,
-            'finished_at'  =>  $model->finished_at,
-            'duration_ms'  =>  $model->duration_ms,
-            'error_message'  =>  $model->error_message,
-            'error_node'  =>  $model->error_node,
-            'ipaas_workflow_id'  =>  $ipaasWorkflowId ? $ipaasWorkflowId->uuid : null,
-            'workflow_name'  =>  $model->workflow_name,
-            'ipaas_provider_id'  =>  $ipaasProviderId ? $ipaasProviderId->uuid : null,
+            'id'  =>  $model->id,
+            'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
+            'provider_id'  =>  $providerId ? $providerId->uuid : null,
+            'provider_uuid'  =>  $model->provider_uuid,
             'provider_name'  =>  $model->provider_name,
             'provider_type'  =>  $model->provider_type,
-            'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
-            'created_at'  =>  $model->created_at,
-            'updated_at'  =>  $model->updated_at,
+            'is_default_wap'  =>  $model->is_default_wap,
+            'active_workflows'  =>  $model->active_workflows,
+            'executions_today'  =>  $model->executions_today,
+            'success_today'  =>  $model->success_today,
+            'errors_today'  =>  $model->errors_today,
+            'running_today'  =>  $model->running_today,
+            'success_rate_today'  =>  $model->success_rate_today,
+            'last_execution_at'  =>  $model->last_execution_at,
+            'last_execution_status'  =>  $model->last_execution_status,
+            'health_status'  =>  $model->health_status,
+            'provider_created_at'  =>  $model->provider_created_at,
             ]
         );
     }
 
-    public function includeStates(WorkflowExecutionsPerspective $model)
+    public function includeStates(PlatformHealthPerspective $model)
     {
         $states = States::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -89,7 +89,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($states, new StatesTransformer());
     }
 
-    public function includeActions(WorkflowExecutionsPerspective $model)
+    public function includeActions(PlatformHealthPerspective $model)
     {
         $input = get_class($model);
         $input = str_replace('\\Database\\Models', '', $input);
@@ -101,7 +101,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($actions, new AvailableActionsTransformer());
     }
 
-    public function includeMedia(WorkflowExecutionsPerspective $model)
+    public function includeMedia(PlatformHealthPerspective $model)
     {
         $media = Media::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -110,7 +110,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($media, new MediaTransformer());
     }
 
-    public function includeSocialMedia(WorkflowExecutionsPerspective $model)
+    public function includeSocialMedia(PlatformHealthPerspective $model)
     {
         $socialMedia = SocialMedia::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -119,7 +119,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($socialMedia, new SocialMediaTransformer());
     }
 
-    public function includeComments(WorkflowExecutionsPerspective $model)
+    public function includeComments(PlatformHealthPerspective $model)
     {
         $comments = Comments::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -128,7 +128,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($comments, new CommentsTransformer());
     }
 
-    public function includeVotes(WorkflowExecutionsPerspective $model)
+    public function includeVotes(PlatformHealthPerspective $model)
     {
         $votes = Votes::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -137,7 +137,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($votes, new VotesTransformer());
     }
 
-    public function includeMeta(WorkflowExecutionsPerspective $model)
+    public function includeMeta(PlatformHealthPerspective $model)
     {
         $meta = Meta::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -146,7 +146,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($meta, new MetaTransformer());
     }
 
-    public function includePhoneNumbers(WorkflowExecutionsPerspective $model)
+    public function includePhoneNumbers(PlatformHealthPerspective $model)
     {
         $phoneNumbers = PhoneNumbers::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -155,7 +155,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($phoneNumbers, new PhoneNumbersTransformer());
     }
 
-    public function includeAddresses(WorkflowExecutionsPerspective $model)
+    public function includeAddresses(PlatformHealthPerspective $model)
     {
         $addresses = Addresses::where('object_type', get_class($model))
             ->where('object_id', $model->id)
@@ -164,6 +164,12 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
+
+
+
+
 
 
 

@@ -6,7 +6,7 @@ use NextDeveloper\Commons\Database\Traits\HasStates;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use NextDeveloper\Commons\Database\Traits\Filterable;
-use NextDeveloper\IPAAS\Database\Observers\AccountStatsObserver;
+use NextDeveloper\IPAAS\Database\Observers\ExecutionDailyStatsObserver;
 use NextDeveloper\Commons\Database\Traits\UuidId;
 use NextDeveloper\Commons\Database\Traits\HasObject;
 use NextDeveloper\Commons\Common\Cache\Traits\CleanCache;
@@ -14,24 +14,27 @@ use NextDeveloper\Commons\Database\Traits\Taggable;
 use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
 
 /**
- * AccountStats model.
+ * ExecutionDailyStats model.
  *
  * @package  NextDeveloper\IPAAS\Database\Models
+ * @property \Carbon\Carbon $stat_date
  * @property integer $iam_account_id
- * @property integer $total_providers
- * @property integer $total_workflows
- * @property integer $executions_today
- * @property integer $success_today
- * @property integer $errors_today
- * @property $success_rate_today
+ * @property integer $ipaas_provider_id
+ * @property string $provider_name
+ * @property string $provider_type
+ * @property integer $total_executions
+ * @property integer $success_count
+ * @property integer $error_count
+ * @property integer $canceled_count
+ * @property $success_rate
  */
-class AccountStats extends Model
+class ExecutionDailyStats extends Model
 {
     use Filterable, UuidId, CleanCache, Taggable, HasStates, RunAsAdministrator, HasObject;
 
     public $timestamps = false;
 
-    protected $table = 'ipaas_account_stats';
+    protected $table = 'ipaas_execution_daily_stats';
 
 
     /**
@@ -40,13 +43,16 @@ class AccountStats extends Model
     protected $guarded = [];
 
     protected $fillable = [
+            'stat_date',
             'iam_account_id',
-            'total_providers',
-            'total_workflows',
-            'executions_today',
-            'success_today',
-            'errors_today',
-            'success_rate_today',
+            'ipaas_provider_id',
+            'provider_name',
+            'provider_type',
+            'total_executions',
+            'success_count',
+            'error_count',
+            'canceled_count',
+            'success_rate',
     ];
 
     /**
@@ -69,11 +75,14 @@ class AccountStats extends Model
      @var array
      */
     protected $casts = [
-    'total_providers' => 'integer',
-    'total_workflows' => 'integer',
-    'executions_today' => 'integer',
-    'success_today' => 'integer',
-    'errors_today' => 'integer',
+    'stat_date' => 'datetime',
+    'ipaas_provider_id' => 'integer',
+    'provider_name' => 'string',
+    'provider_type' => 'string',
+    'total_executions' => 'integer',
+    'success_count' => 'integer',
+    'error_count' => 'integer',
+    'canceled_count' => 'integer',
     ];
 
     /**
@@ -82,7 +91,7 @@ class AccountStats extends Model
      @var array
      */
     protected $dates = [
-
+    'stat_date',
     ];
 
     /**
@@ -105,7 +114,7 @@ class AccountStats extends Model
         parent::boot();
 
         //  We create and add Observer even if we wont use it.
-        parent::observe(AccountStatsObserver::class);
+        parent::observe(ExecutionDailyStatsObserver::class);
 
         self::registerScopes();
     }
@@ -113,7 +122,7 @@ class AccountStats extends Model
     public static function registerScopes()
     {
         $globalScopes = config('ipaas.scopes.global');
-        $modelScopes = config('ipaas.scopes.ipaas_account_stats');
+        $modelScopes = config('ipaas.scopes.ipaas_execution_daily_stats');
 
         if(!$modelScopes) { $modelScopes = [];
         }
@@ -133,7 +142,6 @@ class AccountStats extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
 
 
 

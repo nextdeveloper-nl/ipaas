@@ -59,7 +59,10 @@ class IntegrationPlatformUser extends AbstractRole implements IAuthorizationRole
     {
         return [
             'ipaas_account_stats:read',
-            'ipaas_account_provider_overview:read',
+            'ipaas_account_provider_overviews:read',
+            'ipaas_platform_health_perspective:read',
+            'ipaas_execution_daily_stats:read',
+            'ipaas_workflow_executions_perspective:read',
 
             'ipaas_accounts:read',
             'ipaas_accounts:create',
