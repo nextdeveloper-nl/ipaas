@@ -720,7 +720,6 @@ class N8NIntegration extends AbstractWapIntegration implements N8NInterface
             Workflows::updateOrCreate(
                 [
                     'external_workflow_id' => $wf['external_id'],
-                    'ipaas_provider_id'    => $this->provider->id,
                 ],
                 [
                     'name'            => $wf['name'],
