@@ -163,13 +163,4 @@ class AbstractWorkflowDailyStatsTransformer extends AbstractTransformer
 
 
 
-
-
-
-
-
-
-
-
-
 }

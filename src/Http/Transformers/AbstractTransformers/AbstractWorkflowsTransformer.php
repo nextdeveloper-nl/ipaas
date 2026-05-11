@@ -54,9 +54,7 @@ class AbstractWorkflowsTransformer extends AbstractTransformer
      */
     public function transform(Workflows $model)
     {
-                                                $currentVersionId = \NextDeveloper\\Database\Models\CurrentVersions::where('id', $model->current_version_id)->first();
-                                                            $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
-                                                            $externalWorkflowId = \NextDeveloper\\Database\Models\ExternalWorkflows::where('id', $model->external_workflow_id)->first();
+                                                $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
                                                             $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
                                                             $iamUserId = \NextDeveloper\IAM\Database\Models\Users::where('id', $model->iam_user_id)->first();
                         
@@ -67,15 +65,17 @@ class AbstractWorkflowsTransformer extends AbstractTransformer
             'description'  =>  $model->description,
             'trigger_type'  =>  $model->trigger_type,
             'status'  =>  $model->status,
-            'current_version_id'  =>  $currentVersionId ? $currentVersionId->uuid : null,
+            'current_version'  =>  $model->current_version,
             'ipaas_provider_id'  =>  $ipaasProviderId ? $ipaasProviderId->uuid : null,
-            'external_workflow_id'  =>  $externalWorkflowId ? $externalWorkflowId->uuid : null,
+            'external_workflow_id'  =>  $model->external_workflow_id,
             'last_synched_at'  =>  $model->last_synched_at,
             'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
             'iam_user_id'  =>  $iamUserId ? $iamUserId->uuid : null,
             'created_at'  =>  $model->created_at,
             'updated_at'  =>  $model->updated_at,
             'deleted_at'  =>  $model->deleted_at,
+            'nodes'  =>  $model->nodes,
+            'connections'  =>  $model->connections,
             ]
         );
     }
@@ -164,16 +164,6 @@ class AbstractWorkflowsTransformer extends AbstractTransformer
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -727,6 +727,8 @@ class N8NIntegration extends AbstractWapIntegration implements N8NInterface
                     'description'     => $wf['description'] ?? null,
                     'trigger_type'    => $wf['trigger_type'],
                     'status'          => $wf['status'],
+                    'nodes'           => $wf['nodes'],
+                    'connections'     => $wf['connections'],
                     'iam_account_id'  => $this->provider->iam_account_id,
                     'iam_user_id'     => $this->provider->iam_user_id,
                     'last_synched_at' => now(),

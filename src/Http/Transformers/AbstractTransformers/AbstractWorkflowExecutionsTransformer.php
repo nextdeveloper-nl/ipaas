@@ -57,8 +57,6 @@ class AbstractWorkflowExecutionsTransformer extends AbstractTransformer
                                                 $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
                                                             $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
                                                             $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
-                                                            $externalExecutionId = \NextDeveloper\\Database\Models\ExternalExecutions::where('id', $model->external_execution_id)->first();
-                                                            $retryOfExecutionId = \NextDeveloper\\Database\Models\RetryOfExecutions::where('id', $model->retry_of_execution_id)->first();
                         
         return $this->buildPayload(
             [
@@ -66,7 +64,7 @@ class AbstractWorkflowExecutionsTransformer extends AbstractTransformer
             'ipaas_workflow_id'  =>  $ipaasWorkflowId ? $ipaasWorkflowId->uuid : null,
             'ipaas_provider_id'  =>  $ipaasProviderId ? $ipaasProviderId->uuid : null,
             'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
-            'external_execution_id'  =>  $externalExecutionId ? $externalExecutionId->uuid : null,
+            'external_execution_id'  =>  $model->external_execution_id,
             'status'  =>  $model->status,
             'trigger_mode'  =>  $model->trigger_mode,
             'started_at'  =>  $model->started_at,
@@ -75,7 +73,7 @@ class AbstractWorkflowExecutionsTransformer extends AbstractTransformer
             'error_message'  =>  $model->error_message,
             'error_node'  =>  $model->error_node,
             'error_stack'  =>  $model->error_stack,
-            'retry_of_execution_id'  =>  $retryOfExecutionId ? $retryOfExecutionId->uuid : null,
+            'retry_of_execution_id'  =>  $model->retry_of_execution_id,
             'created_at'  =>  $model->created_at,
             'updated_at'  =>  $model->updated_at,
             'deleted_at'  =>  $model->deleted_at,
@@ -167,15 +165,6 @@ class AbstractWorkflowExecutionsTransformer extends AbstractTransformer
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
-
-
-
-
-
-
-
-
 
 
 

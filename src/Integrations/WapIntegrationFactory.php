@@ -31,6 +31,7 @@ class WapIntegrationFactory
      */
     private static array $registry = [
         'n8n'    => N8NIntegration::class,
+        'n8n-cloud'    => N8NIntegration::class,
         'make'   => MakeIntegration::class,
         'zapier' => ZapierIntegration::class,
     ];

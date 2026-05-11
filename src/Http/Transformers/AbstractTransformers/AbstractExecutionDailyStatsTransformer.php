@@ -162,12 +162,4 @@ class AbstractExecutionDailyStatsTransformer extends AbstractTransformer
 
 
 
-
-
-
-
-
-
-
-
 }

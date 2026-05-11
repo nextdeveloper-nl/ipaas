@@ -4,7 +4,7 @@ namespace NextDeveloper\IPAAS\Database\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use NextDeveloper\Commons\Database\Filters\AbstractQueryFilter;
-                    
+            
 
 /**
  * This class automatically puts where clause on database so that use can filter
@@ -248,37 +248,16 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     }
 
     
-    public function externalExecutionId($value)
-    {
-            $externalExecution = \NextDeveloper\\Database\Models\ExternalExecutions::where('uuid', $value)->first();
-
-        if($externalExecution) {
-            return $this->builder->where('external_execution_id', '=', $externalExecution->id);
-        }
-    }
-
-        //  This is an alias function of externalExecution
-    public function external_execution_id($value)
-    {
-        return $this->externalExecution($value);
-    }
-    
-    public function retryOfExecutionId($value)
-    {
-            $retryOfExecution = \NextDeveloper\\Database\Models\RetryOfExecutions::where('uuid', $value)->first();
-
-        if($retryOfExecution) {
-            return $this->builder->where('retry_of_execution_id', '=', $retryOfExecution->id);
-        }
-    }
-
-        //  This is an alias function of retryOfExecution
-    public function retry_of_execution_id($value)
-    {
-        return $this->retryOfExecution($value);
-    }
-    
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
+
+
+
+
+
+
+
 
 
 

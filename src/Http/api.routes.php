@@ -44,27 +44,6 @@ Route::prefix('ipaas')->group(
             }
         );
 
-        Route::prefix('workflows')->group(
-            function () {
-                Route::get('/', 'Workflows\WorkflowsController@index');
-                Route::get('/actions', 'Workflows\WorkflowsController@getActions');
-
-                Route::get('{ipaas_workflows}/tags ', 'Workflows\WorkflowsController@tags');
-                Route::post('{ipaas_workflows}/tags ', 'Workflows\WorkflowsController@saveTags');
-                Route::get('{ipaas_workflows}/addresses ', 'Workflows\WorkflowsController@addresses');
-                Route::post('{ipaas_workflows}/addresses ', 'Workflows\WorkflowsController@saveAddresses');
-
-                Route::get('/{ipaas_workflows}/{subObjects}', 'Workflows\WorkflowsController@relatedObjects');
-                Route::get('/{ipaas_workflows}', 'Workflows\WorkflowsController@show');
-
-                Route::post('/', 'Workflows\WorkflowsController@store');
-                Route::post('/{ipaas_workflows}/do/{action}', 'Workflows\WorkflowsController@doAction');
-
-                Route::patch('/{ipaas_workflows}', 'Workflows\WorkflowsController@update');
-                Route::delete('/{ipaas_workflows}', 'Workflows\WorkflowsController@destroy');
-            }
-        );
-
         Route::prefix('accounts')->group(
             function () {
                 Route::get('/', 'Accounts\AccountsController@index');
@@ -104,6 +83,27 @@ Route::prefix('ipaas')->group(
 
                 Route::patch('/{ipaas_workflow_daily_stats}', 'WorkflowDailyStats\WorkflowDailyStatsController@update');
                 Route::delete('/{ipaas_workflow_daily_stats}', 'WorkflowDailyStats\WorkflowDailyStatsController@destroy');
+            }
+        );
+
+        Route::prefix('workflows')->group(
+            function () {
+                Route::get('/', 'Workflows\WorkflowsController@index');
+                Route::get('/actions', 'Workflows\WorkflowsController@getActions');
+
+                Route::get('{ipaas_workflows}/tags ', 'Workflows\WorkflowsController@tags');
+                Route::post('{ipaas_workflows}/tags ', 'Workflows\WorkflowsController@saveTags');
+                Route::get('{ipaas_workflows}/addresses ', 'Workflows\WorkflowsController@addresses');
+                Route::post('{ipaas_workflows}/addresses ', 'Workflows\WorkflowsController@saveAddresses');
+
+                Route::get('/{ipaas_workflows}/{subObjects}', 'Workflows\WorkflowsController@relatedObjects');
+                Route::get('/{ipaas_workflows}', 'Workflows\WorkflowsController@show');
+
+                Route::post('/', 'Workflows\WorkflowsController@store');
+                Route::post('/{ipaas_workflows}/do/{action}', 'Workflows\WorkflowsController@doAction');
+
+                Route::patch('/{ipaas_workflows}', 'Workflows\WorkflowsController@update');
+                Route::delete('/{ipaas_workflows}', 'Workflows\WorkflowsController@destroy');
             }
         );
 
@@ -294,8 +294,108 @@ Route::prefix('ipaas')->group(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 );
+
+
+
+
+
+
+
+
+
+
 
 
 

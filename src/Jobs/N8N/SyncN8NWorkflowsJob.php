@@ -86,7 +86,7 @@ class SyncN8NWorkflowsJob implements ShouldQueue
             return [$this->provider];
         }
 
-        return Providers::where('provider_type', 'n8n')->cursor();
+        return Providers::whereIn('provider_type', ['n8n', 'n8n-cloud'])->cursor();
     }
 
     /**

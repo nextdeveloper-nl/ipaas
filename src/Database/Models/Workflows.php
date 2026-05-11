@@ -24,7 +24,7 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  * @property string $description
  * @property string $trigger_type
  * @property string $status
- * @property string $current_version_id
+ * @property string $current_version
  * @property integer $ipaas_provider_id
  * @property string $external_workflow_id
  * @property \Carbon\Carbon $last_synched_at
@@ -33,6 +33,8 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
+ * @property $nodes
+ * @property $connections
  */
 class Workflows extends Model
 {
@@ -54,12 +56,14 @@ class Workflows extends Model
             'description',
             'trigger_type',
             'status',
-            'current_version_id',
+            'current_version',
             'ipaas_provider_id',
             'external_workflow_id',
             'last_synched_at',
             'iam_account_id',
             'iam_user_id',
+            'nodes',
+            'connections',
     ];
 
     /**
@@ -93,6 +97,8 @@ class Workflows extends Model
     'created_at' => 'datetime',
     'updated_at' => 'datetime',
     'deleted_at' => 'datetime',
+    'nodes' => 'array',
+    'connections' => 'array',
     ];
 
     /**
@@ -155,6 +161,15 @@ class Workflows extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
+
+
+
+
+
+
+
 
 
 

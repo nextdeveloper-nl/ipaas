@@ -250,4 +250,13 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
 
 
 
+
+
+
+
+
+
+
+
+
 }

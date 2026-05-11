@@ -168,12 +168,4 @@ class AbstractPlatformHealthPerspectiveTransformer extends AbstractTransformer
 
 
 
-
-
-
-
-
-
-
-
 }

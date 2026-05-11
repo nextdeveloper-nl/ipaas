@@ -4,7 +4,7 @@ namespace NextDeveloper\IPAAS\Database\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use NextDeveloper\Commons\Database\Filters\AbstractQueryFilter;
-                    
+            
 
 /**
  * This class automatically puts where clause on database so that use can filter
@@ -146,21 +146,6 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
         return $this->deletedAtEnd($value);
     }
 
-    public function currentVersionId($value)
-    {
-            $currentVersion = \NextDeveloper\\Database\Models\CurrentVersions::where('uuid', $value)->first();
-
-        if($currentVersion) {
-            return $this->builder->where('current_version_id', '=', $currentVersion->id);
-        }
-    }
-
-        //  This is an alias function of currentVersion
-    public function current_version_id($value)
-    {
-        return $this->currentVersion($value);
-    }
-    
     public function ipaasProviderId($value)
     {
             $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
@@ -174,21 +159,6 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
     public function ipaas_provider_id($value)
     {
         return $this->ipaasProvider($value);
-    }
-    
-    public function externalWorkflowId($value)
-    {
-            $externalWorkflow = \NextDeveloper\\Database\Models\ExternalWorkflows::where('uuid', $value)->first();
-
-        if($externalWorkflow) {
-            return $this->builder->where('external_workflow_id', '=', $externalWorkflow->id);
-        }
-    }
-
-        //  This is an alias function of externalWorkflow
-    public function external_workflow_id($value)
-    {
-        return $this->externalWorkflow($value);
     }
     
     public function iamAccountId($value)
@@ -212,13 +182,6 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
 
     
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
-
-
-
-
-
-
-
 
 
 

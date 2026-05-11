@@ -70,6 +70,7 @@ class SyncN8NCommand extends Command
         if ($providerUuid) {
             $provider = Providers::where('uuid', $providerUuid)
                 ->where('provider_type', 'n8n')
+                ->orWhere('provider_type', 'n8n-cloud')
                 ->first();
 
             if (!$provider) {

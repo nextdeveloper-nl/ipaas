@@ -167,13 +167,4 @@ class AbstractAccountProviderOverviewsTransformer extends AbstractTransformer
 
 
 
-
-
-
-
-
-
-
-
-
 }
