@@ -54,13 +54,16 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
      */
     public function transform(WorkflowExecutionsPerspective $model)
     {
-                                                $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
+                                                $externalExecutionId = \NextDeveloper\\Database\Models\ExternalExecutions::where('id', $model->external_execution_id)->first();
+                                                            $ipaasWorkflowExecutionId = \NextDeveloper\IPAAS\Database\Models\WorkflowExecutions::where('id', $model->ipaas_workflow_execution_id)->first();
+                                                            $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
                                                             $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
                                                             $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
                         
         return $this->buildPayload(
             [
             'id'  =>  $model->uuid,
+            'external_execution_id'  =>  $externalExecutionId ? $externalExecutionId->uuid : null,
             'status'  =>  $model->status,
             'trigger_mode'  =>  $model->trigger_mode,
             'started_at'  =>  $model->started_at,
@@ -68,6 +71,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
             'duration_ms'  =>  $model->duration_ms,
             'error_message'  =>  $model->error_message,
             'error_node'  =>  $model->error_node,
+            'ipaas_workflow_execution_id'  =>  $ipaasWorkflowExecutionId ? $ipaasWorkflowExecutionId->uuid : null,
             'ipaas_workflow_id'  =>  $ipaasWorkflowId ? $ipaasWorkflowId->uuid : null,
             'workflow_name'  =>  $model->workflow_name,
             'ipaas_provider_id'  =>  $ipaasProviderId ? $ipaasProviderId->uuid : null,

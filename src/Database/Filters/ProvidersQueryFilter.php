@@ -185,11 +185,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     
     public function externalAccountId($value)
     {
-            $externalAccount = \NextDeveloper\\Database\Models\ExternalAccounts::where('uuid', $value)->first();
-
-        if($externalAccount) {
-            return $this->builder->where('external_account_id', '=', $externalAccount->id);
-        }
+            return $this->builder->where('external_account_id', '=', $value);
     }
 
         //  This is an alias function of externalAccount
@@ -219,6 +215,8 @@ class ProvidersQueryFilter extends AbstractQueryFilter
 
     
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
 
 
 

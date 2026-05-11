@@ -13,13 +13,15 @@ class WorkflowExecutionsPerspectiveCreateRequest extends AbstractFormRequest
     public function rules()
     {
         return [
-            'status' => 'nullable|string',
+            'external_execution_id' => 'nullable|string|exists:external_executions,uuid|uuid',
+        'status' => 'nullable|string',
         'trigger_mode' => 'nullable|string',
         'started_at' => 'nullable|date',
         'finished_at' => 'nullable|date',
         'duration_ms' => 'nullable|integer',
         'error_message' => 'nullable|string',
         'error_node' => 'nullable|string',
+        'ipaas_workflow_execution_id' => 'nullable|exists:ipaas_workflow_executions,uuid|uuid',
         'ipaas_workflow_id' => 'nullable|exists:ipaas_workflows,uuid|uuid',
         'workflow_name' => 'nullable|string',
         'ipaas_provider_id' => 'nullable|exists:ipaas_providers,uuid|uuid',

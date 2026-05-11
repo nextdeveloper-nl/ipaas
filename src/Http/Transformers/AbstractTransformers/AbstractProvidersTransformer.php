@@ -55,10 +55,9 @@ class AbstractProvidersTransformer extends AbstractTransformer
     public function transform(Providers $model)
     {
                                                 $iaasVirtualMachineId = \NextDeveloper\IAAS\Database\Models\VirtualMachines::where('id', $model->iaas_virtual_machine_id)->first();
-                                                            $externalAccountId = \NextDeveloper\\Database\Models\ExternalAccounts::where('id', $model->external_account_id)->first();
                                                             $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
                                                             $iamUserId = \NextDeveloper\IAM\Database\Models\Users::where('id', $model->iam_user_id)->first();
-                        
+
         return $this->buildPayload(
             [
             'id'  =>  $model->uuid,
@@ -67,7 +66,7 @@ class AbstractProvidersTransformer extends AbstractTransformer
             'provider_type'  =>  $model->provider_type,
             'is_default_wap'  =>  $model->is_default_wap,
             'iaas_virtual_machine_id'  =>  $iaasVirtualMachineId ? $iaasVirtualMachineId->uuid : null,
-            'external_account_id'  =>  $externalAccountId ? $externalAccountId->uuid : null,
+            'external_account_id'  =>  $model->external_account_id,
             'region'  =>  $model->region,
             'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
             'iam_user_id'  =>  $iamUserId ? $iamUserId->uuid : null,
@@ -165,6 +164,8 @@ class AbstractProvidersTransformer extends AbstractTransformer
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
 
 
 
