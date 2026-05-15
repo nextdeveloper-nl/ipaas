@@ -130,4 +130,4 @@ Please let us know if you need any commercial support. We will be happy to help 
 
 You are very welcome to contribute. Please send us an email so we can get in touch and discuss the details:
 
-codewithus@nextdeveloper.com
+support@plusclouds.com
