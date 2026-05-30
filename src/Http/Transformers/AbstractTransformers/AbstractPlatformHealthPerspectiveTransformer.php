@@ -55,14 +55,14 @@ class AbstractPlatformHealthPerspectiveTransformer extends AbstractTransformer
     public function transform(PlatformHealthPerspective $model)
     {
                                                 $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
-                                                            $providerId = \NextDeveloper\\Database\Models\Providers::where('id', $model->provider_id)->first();
+                                                            $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
                         
         return $this->buildPayload(
             [
             'id'  =>  $model->id,
             'iam_account_id'  =>  $iamAccountId ? $iamAccountId->uuid : null,
-            'provider_id'  =>  $providerId ? $providerId->uuid : null,
-            'provider_uuid'  =>  $model->provider_uuid,
+            'ipaas_provider_id'  =>  $ipaasProviderId ? $ipaasProviderId->uuid : null,
+            'ipaas_provider_uuid'  =>  $model->ipaas_provider_uuid,
             'provider_name'  =>  $model->provider_name,
             'provider_type'  =>  $model->provider_type,
             'is_default_wap'  =>  $model->is_default_wap,
@@ -164,6 +164,7 @@ class AbstractPlatformHealthPerspectiveTransformer extends AbstractTransformer
         return $this->collection($addresses, new AddressesTransformer());
     }
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
 
 
 

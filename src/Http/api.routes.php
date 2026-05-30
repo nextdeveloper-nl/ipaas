@@ -149,27 +149,6 @@ Route::prefix('ipaas')->group(
             }
         );
 
-        Route::prefix('platform-health-perspective')->group(
-            function () {
-                Route::get('/', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@index');
-                Route::get('/actions', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@getActions');
-
-                Route::get('{iphp}/tags ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@tags');
-                Route::post('{iphp}/tags ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@saveTags');
-                Route::get('{iphp}/addresses ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@addresses');
-                Route::post('{iphp}/addresses ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@saveAddresses');
-
-                Route::get('/{iphp}/{subObjects}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@relatedObjects');
-                Route::get('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@show');
-
-                Route::post('/', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@store');
-                Route::post('/{iphp}/do/{action}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@doAction');
-
-                Route::patch('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@update');
-                Route::delete('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@destroy');
-            }
-        );
-
         Route::prefix('account-stats')->group(
             function () {
                 Route::get('/', 'AccountStats\AccountStatsController@index');
@@ -209,6 +188,27 @@ Route::prefix('ipaas')->group(
 
                 Route::patch('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@update');
                 Route::delete('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@destroy');
+            }
+        );
+
+        Route::prefix('platform-health-perspective')->group(
+            function () {
+                Route::get('/', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@index');
+                Route::get('/actions', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@getActions');
+
+                Route::get('{iphp}/tags ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@tags');
+                Route::post('{iphp}/tags ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@saveTags');
+                Route::get('{iphp}/addresses ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@addresses');
+                Route::post('{iphp}/addresses ', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@saveAddresses');
+
+                Route::get('/{iphp}/{subObjects}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@relatedObjects');
+                Route::get('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@show');
+
+                Route::post('/', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@store');
+                Route::post('/{iphp}/do/{action}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@doAction');
+
+                Route::patch('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@update');
+                Route::delete('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@destroy');
             }
         );
 
@@ -384,8 +384,19 @@ Route::prefix('ipaas')->group(
 
 
 
+
+
+
+
+
+
+
+
+
+
     }
 );
+
 
 
 

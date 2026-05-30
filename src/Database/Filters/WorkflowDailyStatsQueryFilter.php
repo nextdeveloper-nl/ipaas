@@ -246,4 +246,5 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
 
 
 
+
 }

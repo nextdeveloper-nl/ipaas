@@ -18,8 +18,8 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  *
  * @package  NextDeveloper\IPAAS\Database\Models
  * @property integer $iam_account_id
- * @property integer $provider_id
- * @property string $provider_uuid
+ * @property integer $ipaas_provider_id
+ * @property string $ipaas_provider_uuid
  * @property string $provider_name
  * @property string $provider_type
  * @property boolean $is_default_wap
@@ -50,8 +50,8 @@ class PlatformHealthPerspective extends Model
 
     protected $fillable = [
             'iam_account_id',
-            'provider_id',
-            'provider_uuid',
+            'ipaas_provider_id',
+            'ipaas_provider_uuid',
             'provider_name',
             'provider_type',
             'is_default_wap',
@@ -87,7 +87,7 @@ class PlatformHealthPerspective extends Model
      @var array
      */
     protected $casts = [
-    'provider_id' => 'integer',
+    'ipaas_provider_id' => 'integer',
     'provider_name' => 'string',
     'provider_type' => 'string',
     'is_default_wap' => 'boolean',
@@ -160,6 +160,7 @@ class PlatformHealthPerspective extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
 
 
 
