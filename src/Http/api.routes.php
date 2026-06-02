@@ -170,27 +170,6 @@ Route::prefix('ipaas')->group(
             }
         );
 
-        Route::prefix('workflow-executions-perspective')->group(
-            function () {
-                Route::get('/', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@index');
-                Route::get('/actions', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@getActions');
-
-                Route::get('{iwep}/tags ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@tags');
-                Route::post('{iwep}/tags ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@saveTags');
-                Route::get('{iwep}/addresses ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@addresses');
-                Route::post('{iwep}/addresses ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@saveAddresses');
-
-                Route::get('/{iwep}/{subObjects}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@relatedObjects');
-                Route::get('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@show');
-
-                Route::post('/', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@store');
-                Route::post('/{iwep}/do/{action}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@doAction');
-
-                Route::patch('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@update');
-                Route::delete('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@destroy');
-            }
-        );
-
         Route::prefix('platform-health-perspective')->group(
             function () {
                 Route::get('/', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@index');
@@ -209,6 +188,27 @@ Route::prefix('ipaas')->group(
 
                 Route::patch('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@update');
                 Route::delete('/{iphp}', 'PlatformHealthPerspective\PlatformHealthPerspectiveController@destroy');
+            }
+        );
+
+        Route::prefix('workflow-executions-perspective')->group(
+            function () {
+                Route::get('/', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@index');
+                Route::get('/actions', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@getActions');
+
+                Route::get('{iwep}/tags ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@tags');
+                Route::post('{iwep}/tags ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@saveTags');
+                Route::get('{iwep}/addresses ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@addresses');
+                Route::post('{iwep}/addresses ', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@saveAddresses');
+
+                Route::get('/{iwep}/{subObjects}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@relatedObjects');
+                Route::get('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@show');
+
+                Route::post('/', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@store');
+                Route::post('/{iwep}/do/{action}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@doAction');
+
+                Route::patch('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@update');
+                Route::delete('/{iwep}', 'WorkflowExecutionsPerspective\WorkflowExecutionsPerspectiveController@destroy');
             }
         );
 
@@ -394,8 +394,30 @@ Route::prefix('ipaas')->group(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 );
+
+
 
 
 

@@ -19,7 +19,6 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  * @package  NextDeveloper\IPAAS\Database\Models
  * @property integer $id
  * @property string $uuid
- * @property string $external_execution_id
  * @property string $status
  * @property string $trigger_mode
  * @property \Carbon\Carbon $started_at
@@ -27,7 +26,7 @@ use NextDeveloper\Commons\Database\Traits\RunAsAdministrator;
  * @property integer $duration_ms
  * @property string $error_message
  * @property string $error_node
- * @property integer $ipaas_workflow_execution_id
+ * @property string $external_execution_id
  * @property integer $ipaas_workflow_id
  * @property string $workflow_name
  * @property integer $ipaas_provider_id
@@ -52,7 +51,6 @@ class WorkflowExecutionsPerspective extends Model
     protected $guarded = [];
 
     protected $fillable = [
-            'external_execution_id',
             'status',
             'trigger_mode',
             'started_at',
@@ -60,7 +58,7 @@ class WorkflowExecutionsPerspective extends Model
             'duration_ms',
             'error_message',
             'error_node',
-            'ipaas_workflow_execution_id',
+            'external_execution_id',
             'ipaas_workflow_id',
             'workflow_name',
             'ipaas_provider_id',
@@ -90,7 +88,6 @@ class WorkflowExecutionsPerspective extends Model
      */
     protected $casts = [
     'id' => 'integer',
-    'external_execution_id' => 'string',
     'status' => 'string',
     'trigger_mode' => 'string',
     'started_at' => 'datetime',
@@ -98,7 +95,7 @@ class WorkflowExecutionsPerspective extends Model
     'duration_ms' => 'integer',
     'error_message' => 'string',
     'error_node' => 'string',
-    'ipaas_workflow_execution_id' => 'integer',
+    'external_execution_id' => 'string',
     'ipaas_workflow_id' => 'integer',
     'workflow_name' => 'string',
     'ipaas_provider_id' => 'integer',
@@ -168,6 +165,8 @@ class WorkflowExecutionsPerspective extends Model
     }
 
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
 
 
 

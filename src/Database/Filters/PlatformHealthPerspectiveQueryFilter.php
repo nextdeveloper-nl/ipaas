@@ -260,4 +260,6 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
 
 
 
+
+
 }
