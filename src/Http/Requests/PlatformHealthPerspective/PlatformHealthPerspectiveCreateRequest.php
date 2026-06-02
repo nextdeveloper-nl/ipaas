@@ -13,7 +13,7 @@ class PlatformHealthPerspectiveCreateRequest extends AbstractFormRequest
     public function rules()
     {
         return [
-            'provider_id' => 'nullable|exists:providers,uuid|uuid',
+            'ipaas_provider_id' => 'nullable|exists:ipaas_providers,uuid|uuid',
         'provider_name' => 'nullable|string',
         'provider_type' => 'nullable|string',
         'is_default_wap' => 'nullable|boolean',

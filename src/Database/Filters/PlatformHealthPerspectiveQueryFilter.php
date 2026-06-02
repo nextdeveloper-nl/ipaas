@@ -222,22 +222,25 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     }
 
     
-    public function providerId($value)
+    public function ipaasProviderId($value)
     {
-            $provider = \NextDeveloper\\Database\Models\Providers::where('uuid', $value)->first();
+            $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
 
-        if($provider) {
-            return $this->builder->where('provider_id', '=', $provider->id);
+        if($ipaasProvider) {
+            return $this->builder->where('ipaas_provider_id', '=', $ipaasProvider->id);
         }
     }
 
-        //  This is an alias function of provider
-    public function provider_id($value)
+        //  This is an alias function of ipaasProvider
+    public function ipaas_provider_id($value)
     {
-        return $this->provider($value);
+        return $this->ipaasProvider($value);
     }
     
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
+
+
+
 
 
 
