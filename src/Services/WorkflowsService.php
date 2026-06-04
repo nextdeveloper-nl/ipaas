@@ -30,22 +30,22 @@ class WorkflowsService extends AbstractWorkflowsService
     {
         // Pull fresh workflows from every n8n provider belonging to the current account
         // before querying the local DB, so the caller always sees up-to-date data.
-        // $account = UserHelper::currentAccount();
+        $account = UserHelper::currentAccount();
 
-        // if ($account) {
-        //     $providers = Providers::withoutGlobalScope(AuthorizationScope::class)
-        //         ->where('iam_account_id', $account->id)
-        //         ->get();
+        if ($account) {
+            $providers = Providers::withoutGlobalScope(AuthorizationScope::class)
+                ->where('iam_account_id', $account->id)
+                ->get();
 
-        //     foreach ($providers as $provider) {
-        //         try {
-        //             $integration = WapIntegrationFactory::make($provider);
-        //             $integration->syncWorkflows();
-        //         } catch (\Throwable $e) {
-        //             Log::warning('[IPAAS] WorkflowsService::get — sync failed for provider ' . $provider->id . ': ' . $e->getMessage());
-        //         }
-        //     }
-        // }
+            foreach ($providers as $provider) {
+                try {
+                    $integration = WapIntegrationFactory::make($provider);
+                    $integration->syncWorkflows();
+                } catch (\Throwable $e) {
+                    Log::warning('[IPAAS] WorkflowsService::get — sync failed for provider ' . $provider->id . ': ' . $e->getMessage());
+                }
+            }
+        }
 
         return parent::get($filter, $params);
     }
