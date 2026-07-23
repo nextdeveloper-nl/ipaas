@@ -36,7 +36,7 @@ class AccountStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->totalProviders($value);
     }
-    
+
     public function totalWorkflows($value)
     {
         $operator = substr($value, 0, 1);
@@ -55,7 +55,7 @@ class AccountStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->totalWorkflows($value);
     }
-    
+
     public function executionsToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -74,7 +74,7 @@ class AccountStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->executionsToday($value);
     }
-    
+
     public function successToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -93,7 +93,7 @@ class AccountStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->successToday($value);
     }
-    
+
     public function errorsToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -112,7 +112,7 @@ class AccountStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->errorsToday($value);
     }
-    
+
     public function iamAccountId($value)
     {
             $iamAccount = \NextDeveloper\IAM\Database\Models\Accounts::where('uuid', $value)->first();
@@ -122,7 +122,7 @@ class AccountStatsQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 

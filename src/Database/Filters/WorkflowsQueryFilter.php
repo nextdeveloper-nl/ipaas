@@ -17,19 +17,19 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
      * @var Builder
      */
     protected $builder;
-    
+
     public function name($value)
     {
         return $this->builder->where('name', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function description($value)
     {
         return $this->builder->where('description', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function triggerType($value)
     {
         return $this->builder->where('trigger_type', 'ilike', '%' . $value . '%');
@@ -40,13 +40,13 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
     {
         return $this->triggerType($value);
     }
-        
+
     public function status($value)
     {
         return $this->builder->where('status', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function externalWorkflowId($value)
     {
         return $this->builder->where('external_workflow_id', 'ilike', '%' . $value . '%');
@@ -57,7 +57,7 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
     {
         return $this->externalWorkflowId($value);
     }
-    
+
     public function lastSynchedAtStart($date)
     {
         return $this->builder->where('last_synched_at', '>=', $date);
@@ -160,7 +160,7 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasProvider($value);
     }
-    
+
     public function iamAccountId($value)
     {
             $iamAccount = \NextDeveloper\IAM\Database\Models\Accounts::where('uuid', $value)->first();
@@ -170,7 +170,7 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     public function iamUserId($value)
     {
             $iamUser = \NextDeveloper\IAM\Database\Models\Users::where('uuid', $value)->first();
@@ -180,7 +180,7 @@ class WorkflowsQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 

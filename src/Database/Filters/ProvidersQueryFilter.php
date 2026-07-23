@@ -17,19 +17,19 @@ class ProvidersQueryFilter extends AbstractQueryFilter
      * @var Builder
      */
     protected $builder;
-    
+
     public function name($value)
     {
         return $this->builder->where('name', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function description($value)
     {
         return $this->builder->where('description', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function providerType($value)
     {
         return $this->builder->where('provider_type', 'ilike', '%' . $value . '%');
@@ -40,7 +40,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     {
         return $this->providerType($value);
     }
-        
+
     public function externalAccountId($value)
     {
         return $this->builder->where('external_account_id', 'ilike', '%' . $value . '%');
@@ -51,13 +51,13 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     {
         return $this->externalAccountId($value);
     }
-        
+
     public function region($value)
     {
         return $this->builder->where('region', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function baseUrl($value)
     {
         return $this->builder->where('base_url', 'ilike', '%' . $value . '%');
@@ -68,7 +68,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     {
         return $this->baseUrl($value);
     }
-        
+
     public function apiToken($value)
     {
         return $this->builder->where('api_token', 'ilike', '%' . $value . '%');
@@ -79,7 +79,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     {
         return $this->apiToken($value);
     }
-        
+
     public function apiSecret($value)
     {
         return $this->builder->where('api_secret', 'ilike', '%' . $value . '%');
@@ -90,7 +90,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     {
         return $this->apiSecret($value);
     }
-    
+
     public function isDefaultWap($value)
     {
         return $this->builder->where('is_default_wap', $value);
@@ -101,7 +101,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     {
         return $this->isDefaultWap($value);
     }
-     
+
     public function createdAtStart($date)
     {
         return $this->builder->where('created_at', '>=', $date);
@@ -182,7 +182,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
     {
         return $this->iaasVirtualMachine($value);
     }
-    
+
     public function iamAccountId($value)
     {
             $iamAccount = \NextDeveloper\IAM\Database\Models\Accounts::where('uuid', $value)->first();
@@ -192,7 +192,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     public function iamUserId($value)
     {
             $iamUser = \NextDeveloper\IAM\Database\Models\Users::where('uuid', $value)->first();
@@ -202,7 +202,7 @@ class ProvidersQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 

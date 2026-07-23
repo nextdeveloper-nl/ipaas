@@ -25,7 +25,7 @@ use NextDeveloper\Commons\Exceptions\NotAllowedException;
  */
 class AbstractWorkflowExecutionsPerspectiveService
 {
-    public static function get(WorkflowExecutionsPerspectiveQueryFilter $filter = null, array $params = []) : Collection|LengthAwarePaginator
+    public static function get(?WorkflowExecutionsPerspectiveQueryFilter $filter = null, array $params = []) : Collection|LengthAwarePaginator
     {
         $enablePaginate = array_key_exists('paginate', $params);
 
@@ -214,11 +214,11 @@ class AbstractWorkflowExecutionsPerspectiveService
                 $data['iam_account_id']
             );
         }
-            
+
         if(!array_key_exists('iam_account_id', $data)) {
             $data['iam_account_id'] = UserHelper::currentAccount()->id;
         }
-                        
+
         try {
             $model = WorkflowExecutionsPerspective::create($data);
         } catch(\Exception $e) {
@@ -294,7 +294,7 @@ class AbstractWorkflowExecutionsPerspectiveService
                 $data['iam_account_id']
             );
         }
-    
+
         try {
             $isUpdated = $model->update($data);
             $model = $model->fresh();
