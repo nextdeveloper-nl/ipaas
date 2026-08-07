@@ -17,7 +17,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
      * @var Builder
      */
     protected $builder;
-    
+
     public function providerName($value)
     {
         return $this->builder->where('provider_name', 'ilike', '%' . $value . '%');
@@ -28,7 +28,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->providerName($value);
     }
-        
+
     public function providerType($value)
     {
         return $this->builder->where('provider_type', 'ilike', '%' . $value . '%');
@@ -39,7 +39,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->providerType($value);
     }
-        
+
     public function lastExecutionStatus($value)
     {
         return $this->builder->where('last_execution_status', 'ilike', '%' . $value . '%');
@@ -50,7 +50,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->lastExecutionStatus($value);
     }
-        
+
     public function healthStatus($value)
     {
         return $this->builder->where('health_status', 'ilike', '%' . $value . '%');
@@ -61,7 +61,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->healthStatus($value);
     }
-    
+
     public function activeWorkflows($value)
     {
         $operator = substr($value, 0, 1);
@@ -80,7 +80,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->activeWorkflows($value);
     }
-    
+
     public function executionsToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -99,7 +99,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->executionsToday($value);
     }
-    
+
     public function successToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -118,7 +118,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->successToday($value);
     }
-    
+
     public function errorsToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -137,7 +137,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->errorsToday($value);
     }
-    
+
     public function runningToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -156,7 +156,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->runningToday($value);
     }
-    
+
     public function isDefaultWap($value)
     {
         return $this->builder->where('is_default_wap', $value);
@@ -167,7 +167,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->isDefaultWap($value);
     }
-     
+
     public function lastExecutionAtStart($date)
     {
         return $this->builder->where('last_execution_at', '>=', $date);
@@ -221,7 +221,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     public function ipaasProviderId($value)
     {
             $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
@@ -236,7 +236,7 @@ class PlatformHealthPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasProvider($value);
     }
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 

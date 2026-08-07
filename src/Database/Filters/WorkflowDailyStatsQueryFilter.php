@@ -36,7 +36,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->totalExecutions($value);
     }
-    
+
     public function successCount($value)
     {
         $operator = substr($value, 0, 1);
@@ -55,7 +55,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->successCount($value);
     }
-    
+
     public function errorCount($value)
     {
         $operator = substr($value, 0, 1);
@@ -74,7 +74,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->errorCount($value);
     }
-    
+
     public function canceledCount($value)
     {
         $operator = substr($value, 0, 1);
@@ -93,7 +93,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->canceledCount($value);
     }
-    
+
     public function avgDurationMs($value)
     {
         $operator = substr($value, 0, 1);
@@ -112,7 +112,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->avgDurationMs($value);
     }
-    
+
     public function maxDurationMs($value)
     {
         $operator = substr($value, 0, 1);
@@ -131,7 +131,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->maxDurationMs($value);
     }
-    
+
     public function statDateStart($date)
     {
         return $this->builder->where('stat_date', '>=', $date);
@@ -212,7 +212,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasWorkflow($value);
     }
-    
+
     public function iamAccountId($value)
     {
             $iamAccount = \NextDeveloper\IAM\Database\Models\Accounts::where('uuid', $value)->first();
@@ -222,7 +222,7 @@ class WorkflowDailyStatsQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 

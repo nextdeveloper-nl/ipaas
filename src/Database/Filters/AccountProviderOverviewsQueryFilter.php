@@ -17,7 +17,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
      * @var Builder
      */
     protected $builder;
-    
+
     public function ipaasProviderName($value)
     {
         return $this->builder->where('ipaas_provider_name', 'ilike', '%' . $value . '%');
@@ -28,7 +28,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasProviderName($value);
     }
-        
+
     public function providerType($value)
     {
         return $this->builder->where('provider_type', 'ilike', '%' . $value . '%');
@@ -39,7 +39,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->providerType($value);
     }
-        
+
     public function baseUrl($value)
     {
         return $this->builder->where('base_url', 'ilike', '%' . $value . '%');
@@ -50,7 +50,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->baseUrl($value);
     }
-    
+
     public function totalWorkflows($value)
     {
         $operator = substr($value, 0, 1);
@@ -69,7 +69,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->totalWorkflows($value);
     }
-    
+
     public function totalAutomationEngines($value)
     {
         $operator = substr($value, 0, 1);
@@ -88,7 +88,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->totalAutomationEngines($value);
     }
-    
+
     public function executionsToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -107,7 +107,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->executionsToday($value);
     }
-    
+
     public function successToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -126,7 +126,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->successToday($value);
     }
-    
+
     public function errorsToday($value)
     {
         $operator = substr($value, 0, 1);
@@ -145,7 +145,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->errorsToday($value);
     }
-    
+
     public function isDefaultWap($value)
     {
         return $this->builder->where('is_default_wap', $value);
@@ -156,7 +156,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->isDefaultWap($value);
     }
-     
+
     public function providerCreatedAtStart($date)
     {
         return $this->builder->where('provider_created_at', '>=', $date);
@@ -210,7 +210,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     public function ipaasProviderId($value)
     {
             $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
@@ -225,7 +225,7 @@ class AccountProviderOverviewsQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasProvider($value);
     }
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 

@@ -17,7 +17,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
      * @var Builder
      */
     protected $builder;
-    
+
     public function externalExecutionId($value)
     {
         return $this->builder->where('external_execution_id', 'ilike', '%' . $value . '%');
@@ -28,13 +28,13 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->externalExecutionId($value);
     }
-        
+
     public function status($value)
     {
         return $this->builder->where('status', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function triggerMode($value)
     {
         return $this->builder->where('trigger_mode', 'ilike', '%' . $value . '%');
@@ -45,7 +45,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->triggerMode($value);
     }
-        
+
     public function errorMessage($value)
     {
         return $this->builder->where('error_message', 'ilike', '%' . $value . '%');
@@ -56,7 +56,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->errorMessage($value);
     }
-        
+
     public function errorNode($value)
     {
         return $this->builder->where('error_node', 'ilike', '%' . $value . '%');
@@ -67,7 +67,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->errorNode($value);
     }
-        
+
     public function errorStack($value)
     {
         return $this->builder->where('error_stack', 'ilike', '%' . $value . '%');
@@ -78,7 +78,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->errorStack($value);
     }
-    
+
     public function durationMs($value)
     {
         $operator = substr($value, 0, 1);
@@ -97,7 +97,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->durationMs($value);
     }
-    
+
     public function startedAtStart($date)
     {
         return $this->builder->where('started_at', '>=', $date);
@@ -222,7 +222,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasWorkflow($value);
     }
-    
+
     public function ipaasProviderId($value)
     {
             $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
@@ -237,7 +237,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasProvider($value);
     }
-    
+
     public function iamAccountId($value)
     {
             $iamAccount = \NextDeveloper\IAM\Database\Models\Accounts::where('uuid', $value)->first();
@@ -247,7 +247,7 @@ class WorkflowExecutionsQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 
