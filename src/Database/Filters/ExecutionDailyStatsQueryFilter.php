@@ -17,7 +17,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
      * @var Builder
      */
     protected $builder;
-    
+
     public function providerName($value)
     {
         return $this->builder->where('provider_name', 'ilike', '%' . $value . '%');
@@ -28,7 +28,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->providerName($value);
     }
-        
+
     public function providerType($value)
     {
         return $this->builder->where('provider_type', 'ilike', '%' . $value . '%');
@@ -39,7 +39,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->providerType($value);
     }
-    
+
     public function totalExecutions($value)
     {
         $operator = substr($value, 0, 1);
@@ -58,7 +58,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->totalExecutions($value);
     }
-    
+
     public function successCount($value)
     {
         $operator = substr($value, 0, 1);
@@ -77,7 +77,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->successCount($value);
     }
-    
+
     public function errorCount($value)
     {
         $operator = substr($value, 0, 1);
@@ -96,7 +96,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->errorCount($value);
     }
-    
+
     public function canceledCount($value)
     {
         $operator = substr($value, 0, 1);
@@ -115,7 +115,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->canceledCount($value);
     }
-    
+
     public function statDateStart($date)
     {
         return $this->builder->where('stat_date', '>=', $date);
@@ -147,7 +147,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     public function ipaasProviderId($value)
     {
             $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
@@ -162,7 +162,7 @@ class ExecutionDailyStatsQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasProvider($value);
     }
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 

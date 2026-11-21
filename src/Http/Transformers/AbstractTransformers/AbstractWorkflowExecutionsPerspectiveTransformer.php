@@ -57,7 +57,7 @@ class AbstractWorkflowExecutionsPerspectiveTransformer extends AbstractTransform
                                                 $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
                                                             $ipaasProviderId = \NextDeveloper\IPAAS\Database\Models\Providers::where('id', $model->ipaas_provider_id)->first();
                                                             $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
-                        
+
         return $this->buildPayload(
             [
             'id'  =>  $model->uuid,

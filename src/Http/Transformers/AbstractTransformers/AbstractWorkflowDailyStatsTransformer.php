@@ -56,7 +56,7 @@ class AbstractWorkflowDailyStatsTransformer extends AbstractTransformer
     {
                                                 $ipaasWorkflowId = \NextDeveloper\IPAAS\Database\Models\Workflows::where('id', $model->ipaas_workflow_id)->first();
                                                             $iamAccountId = \NextDeveloper\IAM\Database\Models\Accounts::where('id', $model->iam_account_id)->first();
-                        
+
         return $this->buildPayload(
             [
             'id'  =>  $model->uuid,

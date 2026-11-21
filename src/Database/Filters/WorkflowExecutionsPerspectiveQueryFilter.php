@@ -17,13 +17,13 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
      * @var Builder
      */
     protected $builder;
-    
+
     public function status($value)
     {
         return $this->builder->where('status', 'ilike', '%' . $value . '%');
     }
 
-        
+
     public function triggerMode($value)
     {
         return $this->builder->where('trigger_mode', 'ilike', '%' . $value . '%');
@@ -34,7 +34,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->triggerMode($value);
     }
-        
+
     public function errorMessage($value)
     {
         return $this->builder->where('error_message', 'ilike', '%' . $value . '%');
@@ -45,7 +45,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->errorMessage($value);
     }
-        
+
     public function errorNode($value)
     {
         return $this->builder->where('error_node', 'ilike', '%' . $value . '%');
@@ -56,7 +56,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->errorNode($value);
     }
-        
+
     public function externalExecutionId($value)
     {
         return $this->builder->where('external_execution_id', 'ilike', '%' . $value . '%');
@@ -67,7 +67,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->externalExecutionId($value);
     }
-        
+
     public function workflowName($value)
     {
         return $this->builder->where('workflow_name', 'ilike', '%' . $value . '%');
@@ -78,7 +78,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->workflowName($value);
     }
-        
+
     public function providerName($value)
     {
         return $this->builder->where('provider_name', 'ilike', '%' . $value . '%');
@@ -89,7 +89,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->providerName($value);
     }
-        
+
     public function providerType($value)
     {
         return $this->builder->where('provider_type', 'ilike', '%' . $value . '%');
@@ -100,7 +100,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->providerType($value);
     }
-    
+
     public function durationMs($value)
     {
         $operator = substr($value, 0, 1);
@@ -119,7 +119,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->durationMs($value);
     }
-    
+
     public function startedAtStart($date)
     {
         return $this->builder->where('started_at', '>=', $date);
@@ -222,7 +222,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasWorkflow($value);
     }
-    
+
     public function ipaasProviderId($value)
     {
             $ipaasProvider = \NextDeveloper\IPAAS\Database\Models\Providers::where('uuid', $value)->first();
@@ -237,7 +237,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
     {
         return $this->ipaasProvider($value);
     }
-    
+
     public function iamAccountId($value)
     {
             $iamAccount = \NextDeveloper\IAM\Database\Models\Accounts::where('uuid', $value)->first();
@@ -247,7 +247,7 @@ class WorkflowExecutionsPerspectiveQueryFilter extends AbstractQueryFilter
         }
     }
 
-    
+
     // EDIT AFTER HERE - WARNING: ABOVE THIS LINE MAY BE REGENERATED AND YOU MAY LOSE CODE
 
 
